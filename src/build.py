@@ -54,7 +54,7 @@ def write_output(content, *path):
         if not os.path.exists(os.path.join(args.output, *path[: i + 1])):
             os.makedirs(os.path.join(args.output, *path[: i + 1]))
 
-    with open(os.path.join(args.output, *path), "w") as f:
+    with open(os.path.join(args.output, *path), "w", encoding="utf-8") as f:
         f.write(content)
 
 
@@ -65,7 +65,8 @@ make_html: mistune.Markdown = mistune.create_markdown(
 
 
 def get_post(folder, file):
-    obj = frontmatter.load(f"posts/{folder}/{file}")
+    with open(f"posts/{folder}/{file}", "r", encoding="utf-8") as f:
+        obj = frontmatter.load(f)
     html = make_html(obj.content)
 
     obj.content = html
