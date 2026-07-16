@@ -8,11 +8,11 @@ import frontmatter
 from bs4 import BeautifulSoup, element
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-first_name = "Sagar"
-last_name = "Patil"
+first_name = "Mikhail"
+last_name = "Simanian"
 name = f"{first_name} {last_name}"
-domain = "sagarpatil.me"
-generic_username = "sagarreddypatil"
+domain = "github.com/mikhail0777"
+generic_username = "mikhail0777"
 twitter_username = f"@{generic_username}"
 url = f"https://{domain}"  # for opengraph
 
