@@ -31,6 +31,223 @@
         />
       </div>
     {% endcall %}
+
+    {% call fieldset("cat ~/random.md") %}
+      <!-- Lincoln Quote at the top -->
+      <div class="text-center italic text-gray-500 mb-6 text-sm font-mono dark:text-gray-400">
+        ❝ Don't believe everything you read on the internet. ❞<br>
+        — Abraham Lincoln
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="flex flex-row justify-start gap-2 mb-4 flex-wrap border-b border-black dark:border-white pb-3">
+        <button id="tab-btn-travel" class="tab-btn flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white bg-black text-white dark:bg-white dark:text-black text-normal px-4 h-8 shadow-[3px_3px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_1px_rgba(255,255,255,0.6)] font-mono font-bold" onclick="switchTab('travel')">
+          Travel
+        </button>
+        <button id="tab-btn-music" class="tab-btn flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black text-normal px-4 h-8 shadow-[3px_3px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_1px_rgba(255,255,255,0.6)] font-mono font-bold" onclick="switchTab('music')">
+          Music
+        </button>
+        <button id="tab-btn-wins" class="tab-btn flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black text-normal px-4 h-8 shadow-[3px_3px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_1px_rgba(255,255,255,0.6)] font-mono font-bold" onclick="switchTab('wins')">
+          Wins
+        </button>
+        <button id="tab-btn-lore" class="tab-btn flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black text-normal px-4 h-8 shadow-[3px_3px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_1px_rgba(255,255,255,0.6)] font-mono font-bold" onclick="switchTab('lore')">
+          Lore
+        </button>
+      </div>
+
+      <!-- Tab Content Panes -->
+      <div>
+        <!-- Travel Pane -->
+        <div id="tab-pane-travel" class="tab-pane block">
+          <div class="flex flex-col gap-4">
+            <!-- Instructions and Globe -->
+            <div class="relative w-full h-[400px] border border-black dark:border-white overflow-hidden bg-[#0a1128] flex flex-col items-center justify-center">
+              <div class="absolute top-2 left-2 z-10 bg-white/95 dark:bg-black/95 p-2 text-[10px] font-mono border border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.8)] pointer-events-none">
+                <div class="font-bold border-b border-black dark:border-white mb-1">travel.exe</div>
+                <div>drag to rotate</div>
+                <div>wheel to zoom</div>
+              </div>
+              <div id="globeEl" class="w-full h-full"></div>
+            </div>
+
+            <!-- Horizontal Slideshow -->
+            <div class="w-full">
+              <div class="text-sm font-mono font-bold mb-2">📸 photo_gallery.zip</div>
+              <div class="flex flex-row gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-black dark:scrollbar-thumb-white scroll-smooth snap-x snap-mandatory">
+                <!-- Slideshow Card 1 -->
+                <div class="flex-none w-[280px] border border-black dark:border-white p-2 bg-white dark:bg-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start">
+                  <img src="/photography/grand-canyon-1.jpg" alt="Grand Canyon" class="w-full h-[180px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-mono text-xs font-bold text-center">Grand Canyon, USA</div>
+                </div>
+                <!-- Slideshow Card 2 -->
+                <div class="flex-none w-[280px] border border-black dark:border-white p-2 bg-white dark:bg-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start">
+                  <img src="/photography/golden-gate-bridge.jpg" alt="Golden Gate Bridge" class="w-full h-[180px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-mono text-xs font-bold text-center">San Francisco, USA</div>
+                </div>
+                <!-- Slideshow Card 3 -->
+                <div class="flex-none w-[280px] border border-black dark:border-white p-2 bg-white dark:bg-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start">
+                  <img src="/photography/antelope-canyon.jpg" alt="Antelope Canyon" class="w-full h-[180px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-mono text-xs font-bold text-center">Antelope Canyon, USA</div>
+                </div>
+                <!-- Slideshow Card 4 -->
+                <div class="flex-none w-[280px] border border-black dark:border-white p-2 bg-white dark:bg-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start">
+                  <img src="/photography/sunset.jpg" alt="Sunset" class="w-full h-[180px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-mono text-xs font-bold text-center">Sunset view</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Music Pane -->
+        <div id="tab-pane-music" class="tab-pane hidden">
+          <div class="font-mono text-sm border border-black dark:border-white p-4 bg-gray-50 dark:bg-neutral-900 leading-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]">
+            <span class="text-green-600 dark:text-green-400">mikhail@carleton:~$</span> cat ~/playlist.m3u<br>
+            <br>
+            [1] Pink Floyd - Wish You Were Here (1975)<br>
+            [2] Daft Punk - Giorgio by Moroder (2013)<br>
+            [3] Kavinsky - Nightcall (2010)<br>
+            [4] Led Zeppelin - Stairway to Heaven (1971)<br>
+            <br>
+            <span class="text-yellow-600 dark:text-yellow-400">[System] Loading Spotify API credentials... (Coming soon)</span>
+          </div>
+        </div>
+
+        <!-- Wins Pane -->
+        <div id="tab-pane-wins" class="tab-pane hidden">
+          <div class="font-mono text-sm border border-black dark:border-white p-4 bg-gray-50 dark:bg-neutral-900 leading-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]">
+            <span class="text-green-600 dark:text-green-400">mikhail@carleton:~$</span> cat ~/achievements.txt<br>
+            <br>
+            🏆 Cloud Operations & Automation Intern @ Porsche (2025/2026)<br>
+            🎓 Fourth-Year Computer Science @ Carleton University<br>
+            🥋 Brazilian Jiu-Jitsu Purple Belt<br>
+            🏍️ Successfully rebuilt 2/3 motorcycles without any leftover parts
+          </div>
+        </div>
+
+        <!-- Lore Pane -->
+        <div id="tab-pane-lore" class="tab-pane hidden">
+          <div class="font-mono text-sm border border-black dark:border-white p-4 bg-gray-50 dark:bg-neutral-900 leading-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]">
+            <span class="text-green-600 dark:text-green-400">mikhail@carleton:~$</span> cat ~/lore.md<br>
+            <br>
+            # The Legend of Mikhail<br>
+            - Spent 3 hours debugging a trailing comma in a config file.<br>
+            - Won a local BJJ tournament with a choke hold he learned from a YouTube video.<br>
+            - Keeps buying 80s motorcycles because "the carburetors just need a quick clean" (it is never a quick clean).
+          </div>
+        </div>
+      </div>
+    {% endcall %}
+
+    <script>
+      let globeInstance = null;
+
+      function switchTab(tabId) {
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+          pane.classList.add('hidden');
+          pane.classList.remove('block');
+        });
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.classList.remove('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black');
+          btn.classList.add('hover:bg-black', 'hover:text-white', 'dark:hover:bg-white', 'dark:hover:text-black');
+        });
+
+        const selectedPane = document.getElementById(`tab-pane-${tabId}`);
+        if (selectedPane) {
+          selectedPane.classList.remove('hidden');
+          selectedPane.classList.add('block');
+        }
+
+        const selectedBtn = document.getElementById(`tab-btn-${tabId}`);
+        if (selectedBtn) {
+          selectedBtn.classList.add('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black');
+          selectedBtn.classList.remove('hover:bg-black', 'hover:text-white', 'dark:hover:bg-white', 'dark:hover:text-black');
+        }
+
+        if (tabId === 'travel') {
+          setTimeout(() => {
+            initGlobe();
+          }, 10);
+        }
+      }
+
+      function initGlobe() {
+        const container = document.getElementById('globeEl');
+        if (!container) return;
+
+        if (globeInstance) {
+          globeInstance.width(container.clientWidth);
+          globeInstance.height(container.clientHeight);
+          return;
+        }
+
+        const earthTexture = 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
+        const bumpTexture = 'https://unpkg.com/three-globe/example/img/earth-topology.png';
+
+        globeInstance = Globe()(container)
+          .globeImageUrl(earthTexture)
+          .bumpImageUrl(bumpTexture)
+          .backgroundImageUrl(null)
+          .width(container.clientWidth)
+          .height(container.clientHeight)
+          .showAtmosphere(true)
+          .atmosphereColor('#8ecae6')
+          .atmosphereAltitude(0.15);
+
+        const controls = globeInstance.controls();
+        controls.enableZoom = true;
+        controls.enablePan = false;
+        controls.zoomSpeed = 0.8;
+        controls.rotateSpeed = 0.5;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.6;
+
+        controls.addEventListener('start', () => {
+          globeInstance.controls().autoRotate = false;
+        });
+
+        const pins = [
+          { lat: 45.4215, lng: -75.6972, name: 'Ottawa, Canada', color: '#4ade80' },
+          { lat: 48.7758, lng: 9.1829, name: 'Stuttgart, Germany (Porsche)', color: '#ef4444' },
+          { lat: 40.7128, lng: -74.0060, name: 'New York, USA', color: '#4ade80' },
+          { lat: 34.0522, lng: -118.2437, name: 'Los Angeles, USA', color: '#4ade80' }
+        ];
+
+        globeInstance
+          .htmlElementsData(pins)
+          .htmlElement(d => {
+            const el = document.createElement('div');
+            el.className = 'relative flex items-center justify-center group';
+            
+            el.innerHTML = `
+              <!-- Pin pulse animation -->
+              <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full opacity-75" style="background-color: ${d.color}"></span>
+              <!-- Pin dot -->
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 border border-white" style="background-color: ${d.color}"></span>
+              <!-- Tooltip/Label -->
+              <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-black/90 dark:bg-black/95 text-white text-[10px] py-1 px-2 rounded border border-white whitespace-nowrap shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none font-mono z-50">
+                ${d.name}
+              </div>
+            `;
+            return el;
+          });
+
+        window.addEventListener('resize', () => {
+          if (globeInstance) {
+            globeInstance.width(container.clientWidth);
+            globeInstance.height(container.clientHeight);
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          initGlobe();
+        }, 300);
+      });
+    </script>
+
     {% call fieldset("ls ~/projects") %}
       {{ lists["projects"]|safe }}
     {% endcall %}
