@@ -33,10 +33,12 @@
     {% endcall %}
 
     {% call fieldset("cat ~/random.md") %}
-      <!-- Lincoln Quote at the top -->
-      <div class="text-center italic text-gray-500 mb-6 text-sm font-mono dark:text-gray-400">
-        ❝ Don't believe everything you read on the internet. ❞<br>
-        — Abraham Lincoln
+      <!-- Motto at the top -->
+      <div class="mb-6 text-sm font-mono text-left">
+        <div class="text-black dark:text-white font-bold">My life motto</div>
+        <div class="italic text-gray-500 dark:text-gray-400 mt-1">
+          ❝ Don't believe everything you read on the internet. ❞ — Abraham Lincoln
+        </div>
       </div>
 
       <!-- Tab Buttons -->
@@ -62,38 +64,113 @@
           <div class="flex flex-col gap-4">
             <!-- Instructions and Globe -->
             <div class="relative w-full h-[400px] border border-black dark:border-white overflow-hidden bg-[#0a1128] flex flex-col items-center justify-center">
+              <!-- Header info box -->
               <div class="absolute top-2 left-2 z-10 bg-white/95 dark:bg-black/95 p-2 text-[10px] font-mono border border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.8)] pointer-events-none">
                 <div class="font-bold border-b border-black dark:border-white mb-1">travel.exe</div>
                 <div>drag to rotate</div>
                 <div>wheel to zoom</div>
               </div>
+
+              <!-- Location detail popup card -->
+              <div id="location-detail-card" class="hidden absolute top-4 right-4 z-20 w-[240px] bg-white dark:bg-neutral-900 border border-black dark:border-white p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.8)]">
+                <div class="flex items-center justify-between border-b border-black dark:border-white pb-1 mb-2">
+                  <span class="font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400" id="detail-title">location_info.txt</span>
+                  <button class="font-mono text-xs font-bold border border-black dark:border-white px-1.5 py-0.5 bg-gray-100 dark:bg-neutral-800 hover:bg-red-500 hover:text-white dark:hover:bg-red-600 dark:hover:text-white" onclick="closeDetailCard()">X</button>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <img id="detail-image" src="" alt="Location image" class="w-full h-[120px] object-cover border border-black dark:border-white hidden" />
+                  <div class="font-mono text-xs">
+                    <div id="detail-name" class="font-bold text-sm text-black dark:text-white"></div>
+                    <div id="detail-desc" class="text-[11px] text-gray-600 dark:text-gray-300 mt-1 leading-relaxed"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Legend Overlay -->
+              <div class="absolute bottom-2 left-2 z-10 bg-white/95 dark:bg-neutral-900/95 p-2 text-[10px] font-mono border border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.8)]">
+                <div class="flex items-center gap-1.5">
+                  <span class="inline-flex items-center justify-center bg-green-600 border border-white text-white font-bold w-4 h-4 text-[9px]">✓</span>
+                  <span>been there</span>
+                </div>
+              </div>
+
               <div id="globeEl" class="w-full h-full"></div>
             </div>
 
-            <!-- Horizontal Slideshow -->
+            <!-- Horizontal Slideshow / Polaroid Collage -->
             <div class="w-full">
               <div class="text-sm font-mono font-bold mb-2">📸 photo_gallery.zip</div>
-              <div class="flex flex-row gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-black dark:scrollbar-thumb-white scroll-smooth snap-x snap-mandatory">
-                <!-- Slideshow Card 1 -->
-                <div class="flex-none w-[280px] border border-black dark:border-white p-2 bg-white dark:bg-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start">
-                  <img src="/photography/grand-canyon-1.jpg" alt="Grand Canyon" class="w-full h-[180px] object-cover border border-black dark:border-white mb-2" />
-                  <div class="font-mono text-xs font-bold text-center">Grand Canyon, USA</div>
+              <div class="flex flex-row gap-4 overflow-x-auto pb-4 pt-1 px-1 scrollbar-thin scrollbar-thumb-black dark:scrollbar-thumb-white scroll-smooth snap-x snap-mandatory">
+                
+                <!-- Ottawa Card -->
+                <div onclick="selectLocation(45.4215, -75.6972)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/ottawa_paintball.jpg" alt="Ottawa, Canada" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Ottawa, Canada</div>
                 </div>
-                <!-- Slideshow Card 2 -->
-                <div class="flex-none w-[280px] border border-black dark:border-white p-2 bg-white dark:bg-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start">
-                  <img src="/photography/golden-gate-bridge.jpg" alt="Golden Gate Bridge" class="w-full h-[180px] object-cover border border-black dark:border-white mb-2" />
-                  <div class="font-mono text-xs font-bold text-center">San Francisco, USA</div>
+
+                <!-- Yerevan Card -->
+                <div onclick="selectLocation(40.1792, 44.5152)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/yerevan_cascade.jpg" alt="Yerevan, Armenia" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Yerevan, Armenia</div>
                 </div>
-                <!-- Slideshow Card 3 -->
-                <div class="flex-none w-[280px] border border-black dark:border-white p-2 bg-white dark:bg-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start">
-                  <img src="/photography/antelope-canyon.jpg" alt="Antelope Canyon" class="w-full h-[180px] object-cover border border-black dark:border-white mb-2" />
-                  <div class="font-mono text-xs font-bold text-center">Antelope Canyon, USA</div>
+
+                <!-- Montreal Card -->
+                <div onclick="selectLocation(45.5017, -73.5673)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/montreal_mural.jpg" alt="Montreal, Canada" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Montreal, Canada</div>
                 </div>
-                <!-- Slideshow Card 4 -->
-                <div class="flex-none w-[280px] border border-black dark:border-white p-2 bg-white dark:bg-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start">
-                  <img src="/photography/sunset.jpg" alt="Sunset" class="w-full h-[180px] object-cover border border-black dark:border-white mb-2" />
-                  <div class="font-mono text-xs font-bold text-center">Sunset view</div>
+
+                <!-- Washington D.C. Card -->
+                <div onclick="selectLocation(38.9072, -77.0369)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/washington_capitol.jpg" alt="Washington D.C., USA" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Washington D.C., USA</div>
                 </div>
+
+                <!-- Toronto Card -->
+                <div onclick="selectLocation(43.6532, -79.3832)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/toronto_cntower.jpg" alt="Toronto, Canada" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Toronto, Canada</div>
+                </div>
+
+                <!-- Rome Card -->
+                <div onclick="selectLocation(41.9028, 12.4964)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/rome_colosseum.jpg" alt="Rome, Italy" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Rome, Italy</div>
+                </div>
+
+                <!-- Barcelona Card -->
+                <div onclick="selectLocation(41.3851, 2.1734)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/barcelona_trophies.jpg" alt="Barcelona, Spain" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Barcelona, Spain</div>
+                </div>
+
+                <!-- Ust-Kamenogorsk Card -->
+                <div onclick="selectLocation(49.9500, 82.6000)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/kazakhstan_bonfire.jpg" alt="Ust-Kamenogorsk, Kazakhstan" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Ust-Kamenogorsk, Kazakhstan</div>
+                </div>
+
+                <!-- Dominican Republic Card -->
+                <div onclick="selectLocation(18.7357, -70.1627)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/dominican_broom.jpg" alt="Dominican Republic" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Dominican Republic</div>
+                </div>
+
+                <!-- Grenada Card -->
+                <div onclick="selectLocation(12.1165, -61.6790)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/grenada_bay.jpg" alt="Grenada" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Grenada</div>
+                </div>
+
+                <!-- Vatican City Card -->
+                <div onclick="selectLocation(41.9029, 12.4534)" class="cursor-pointer flex-none w-[200px] border border-black dark:border-white p-3 bg-white dark:bg-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)] snap-start hover:-translate-y-1 transition-transform duration-200">
+                  <img src="/photography/vatican_stpeters.jpg" alt="Vatican City" class="w-full h-[140px] object-cover border border-black dark:border-white mb-2" />
+                  <div class="font-sans text-xs font-bold text-black dark:text-white text-left">Vatican City</div>
+                </div>
+
+              </div>
+            </div>
+
               </div>
             </div>
           </div>
@@ -172,6 +249,70 @@
         }
       }
 
+      // Define Pins Globally so selectLocation can access them
+      const pins = [
+        { lat: 45.4215, lng: -75.6972, name: 'Ottawa, Canada', type: 'been_there', desc: 'Paintball with friends in Ottawa, my home base!', img: '/photography/ottawa_paintball.jpg' },
+        { lat: 40.1792, lng: 44.5152, name: 'Yerevan, Armenia', type: 'been_there', desc: 'Standing on the Cascade stairs looking over Yerevan, my home country!', img: '/photography/yerevan_cascade.jpg' },
+        { lat: 45.5017, lng: -73.5673, name: 'Montreal, Canada', type: 'been_there', desc: 'Walking in Montreal in front of the Leonard Cohen mural in winter.', img: '/photography/montreal_mural.jpg' },
+        { lat: 38.9072, lng: -77.0369, name: 'Washington D.C., USA', type: 'been_there', desc: 'Visiting the US Capitol building in Washington D.C.', img: '/photography/washington_capitol.jpg' },
+        { lat: 43.6532, lng: -79.3832, name: 'Toronto, Canada', type: 'been_there', desc: 'A night out in Toronto by the CN Tower.', img: '/photography/toronto_cntower.jpg' },
+        { lat: 41.9028, lng: 12.4964, name: 'Rome, Italy', type: 'been_there', desc: 'Standing in front of the illuminated Colosseum at night in Rome.', img: '/photography/rome_colosseum.jpg' },
+        { lat: 41.3851, lng: 2.1734, name: 'Barcelona, Spain', type: 'been_there', desc: 'Visiting the FC Barcelona Museum and seeing their Champions League trophies.', img: '/photography/barcelona_trophies.jpg' },
+        { lat: 49.9500, lng: 82.6000, name: 'Ust-Kamenogorsk, Kazakhstan', type: 'been_there', desc: 'Chilling by a huge bonfire in Ust-Kamenogorsk, Kazakhstan.', img: '/photography/kazakhstan_bonfire.jpg' },
+        { lat: 18.7357, lng: -70.1627, name: 'Dominican Republic', type: 'been_there', desc: 'Jumping high on a broomstick over the beautiful Dominican ocean.', img: '/photography/dominican_broom.jpg' },
+        { lat: 12.1165, lng: -61.6790, name: 'Grenada', type: 'been_there', desc: 'Enjoying the incredible view of the harbor and coastline in Grenada.', img: '/photography/grenada_bay.jpg' },
+        { lat: 41.9029, lng: 12.4534, name: 'Vatican City', type: 'been_there', desc: "Standing inside the breathtaking St. Peter's Basilica in Vatican City.", img: '/photography/vatican_stpeters.jpg' },
+        { lat: 25.2048, lng: 55.2708, name: 'Dubai, UAE', type: 'been_there', desc: 'Visited the modern skyscrapers and deserts of Dubai, UAE.' },
+        { lat: 23.1136, lng: -82.3666, name: 'Cuba', type: 'been_there', desc: 'Traveled to Cuba, experiencing the rich culture and historic streets of Havana.' },
+        { lat: 55.7558, lng: 37.6173, name: 'Moscow, Russia', type: 'been_there', desc: 'Explored the Red Square and historic sights in Moscow.' }
+      ];
+
+      function showDetailCard(data) {
+        const card = document.getElementById('location-detail-card');
+        const title = document.getElementById('detail-title');
+        const img = document.getElementById('detail-image');
+        const name = document.getElementById('detail-name');
+        const desc = document.getElementById('detail-desc');
+
+        if (!card) return;
+
+        name.innerText = data.name;
+        desc.innerText = data.desc || (data.type === 'been_there' ? "A place I've visited!" : "On my bucket list to visit!");
+        
+        if (data.img) {
+          img.src = data.img;
+          img.classList.remove('hidden');
+        } else {
+          img.classList.add('hidden');
+          img.src = '';
+        }
+
+        card.classList.remove('hidden');
+      }
+
+      function closeDetailCard() {
+        const card = document.getElementById('location-detail-card');
+        if (card) {
+          card.classList.add('hidden');
+        }
+      }
+
+      function selectLocation(lat, lng) {
+        // Find the pin in our data array to get all fields
+        const pin = pins.find(p => Math.abs(p.lat - lat) < 0.001 && Math.abs(p.lng - lng) < 0.001);
+        if (!pin) return;
+        
+        // Disable auto-rotation so it stays on the selected point
+        if (globeInstance) {
+          const controls = globeInstance.controls();
+          if (controls) controls.autoRotate = false;
+          
+          globeInstance.pointOfView({ lat: pin.lat, lng: pin.lng, altitude: 0.8 }, 1200);
+        }
+        
+        showDetailCard(pin);
+      }
+
       function initGlobe() {
         const container = document.getElementById('globeEl');
         if (!container) return;
@@ -207,29 +348,40 @@
           globeInstance.controls().autoRotate = false;
         });
 
-        const pins = [
-          { lat: 45.4215, lng: -75.6972, name: 'Ottawa, Canada', color: '#4ade80' },
-          { lat: 48.7758, lng: 9.1829, name: 'Stuttgart, Germany (Porsche)', color: '#ef4444' },
-          { lat: 40.7128, lng: -74.0060, name: 'New York, USA', color: '#4ade80' },
-          { lat: 34.0522, lng: -118.2437, name: 'Los Angeles, USA', color: '#4ade80' }
-        ];
-
         globeInstance
           .htmlElementsData(pins)
           .htmlElement(d => {
             const el = document.createElement('div');
-            el.className = 'relative flex items-center justify-center group';
+            el.className = 'relative flex items-center justify-center group cursor-pointer pointer-events-auto select-none';
+            el.style.width = '24px';
+            el.style.height = '24px';
             
             el.innerHTML = `
-              <!-- Pin pulse animation -->
-              <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full opacity-75" style="background-color: ${d.color}"></span>
-              <!-- Pin dot -->
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 border border-white" style="background-color: ${d.color}"></span>
-              <!-- Tooltip/Label -->
-              <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-black/90 dark:bg-black/95 text-white text-[10px] py-1 px-2 rounded border border-white whitespace-nowrap shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none font-mono z-50">
+              <!-- Anchor Point Dot at the center -->
+              <div class="absolute top-[8px] left-[8px] flex items-center justify-center h-2 w-2 pointer-events-none">
+                <span class="animate-ping absolute inline-flex h-3.5 w-3.5 rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500 border border-white"></span>
+              </div>
+
+              <!-- Vertical stem pointing up from the anchor point -->
+              <div class="absolute bottom-[16px] left-[11px] w-[2px] h-3 bg-white border border-black/40 pointer-events-none"></div>
+
+              <!-- Checkmark Box at the top -->
+              <div class="absolute bottom-[28px] left-[3px] bg-green-600 border border-white text-white flex items-center justify-center font-bold shadow-md rounded-none hover:bg-green-500 hover:scale-110 transition-all font-mono" style="width: 18px; height: 18px; font-size: 11px; line-height: 1;">
+                ✓
+              </div>
+
+              <!-- Tooltip / Label -->
+              <div class="absolute bottom-[50px] left-1/2 transform -translate-x-1/2 bg-black/90 dark:bg-black/95 text-white text-[10px] py-1 px-2 rounded border border-white whitespace-nowrap shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none font-mono z-50">
                 ${d.name}
               </div>
             `;
+
+            el.onclick = (e) => {
+              e.stopPropagation();
+              selectLocation(d.lat, d.lng);
+            };
+
             return el;
           });
 
