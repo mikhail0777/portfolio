@@ -2,6 +2,27 @@
 {% from "components/fieldset.html" import fieldset %}
 
 {% block content %}
+  <style>
+    @keyframes winampMarquee {
+      0% { transform: translate3d(100%, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+    .winamp-marquee {
+      display: inline-block;
+      animation: winampMarquee 12s linear infinite;
+    }
+    @keyframes spinRecord {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .spin-album-art {
+      animation: spinRecord 10s linear infinite;
+      border-radius: 50%;
+    }
+    .spin-paused {
+      animation-play-state: paused;
+    }
+  </style>
   <div class="flex flex-col gap-4">
     <!-- <WhoAmI /> -->
     {% call fieldset("cat README.md") %}
@@ -178,15 +199,79 @@
 
         <!-- Music Pane -->
         <div id="tab-pane-music" class="tab-pane hidden">
-          <div class="font-mono text-sm border border-black dark:border-white p-4 bg-gray-50 dark:bg-neutral-900 leading-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]">
-            <span class="text-green-600 dark:text-green-400">mikhail@carleton:~$</span> cat ~/playlist.m3u<br>
-            <br>
-            [1] Pink Floyd - Wish You Were Here (1975)<br>
-            [2] Daft Punk - Giorgio by Moroder (2013)<br>
-            [3] Kavinsky - Nightcall (2010)<br>
-            [4] Led Zeppelin - Stairway to Heaven (1971)<br>
-            <br>
-            <span class="text-yellow-600 dark:text-yellow-400">[System] Loading Spotify API credentials... (Coming soon)</span>
+          
+          <div class="flex flex-col lg:flex-row gap-6 w-full items-start">
+            
+            <!-- Left: Floating Album Covers Canvas + Controls -->
+            <div class="flex-1 w-full relative">
+              
+              <!-- Floating Album Canvas Wrapper -->
+              <div id="music-canvas-container" class="w-full h-[450px] relative overflow-hidden bg-black border border-black dark:border-white shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]" style="background-color: #0c0c0e; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px;">
+                
+                <!-- music.exe Control Panel (Top-Left overlay) -->
+                <div class="absolute top-3 left-3 z-30 bg-white/95 dark:bg-neutral-900/95 p-3 border border-black dark:border-white/40 shadow-md font-mono text-[10px] w-[180px] leading-relaxed text-black dark:text-white select-none">
+                  <div class="font-bold border-b border-black dark:border-white/20 pb-1 mb-1.5 flex justify-between">
+                    <span>music.exe</span>
+                    <span class="text-neutral-500">_ [] X</span>
+                  </div>
+                  <div>tap covers: details</div>
+                  <div>corners: 0</div>
+                  <div class="mt-1">
+                    <div class="flex justify-between font-bold mb-0.5">
+                      <span>speed:</span>
+                      <span id="canvas-speed-val">0.55x</span>
+                    </div>
+                    <input id="canvas-speed-slider" type="range" min="0" max="2" step="0.1" value="0.55" class="w-full accent-black dark:accent-white h-1 bg-neutral-200 dark:bg-neutral-800 cursor-pointer" oninput="setSpeed(this.value)" />
+                  </div>
+                </div>
+
+                <!-- now hovering Card (Bottom-Left overlay) -->
+                <div class="absolute bottom-3 left-3 z-30 bg-white/95 dark:bg-neutral-900/95 p-3 border border-black dark:border-white/40 shadow-md font-mono w-[200px] flex items-center gap-3 text-black dark:text-white select-none">
+                  <img id="hover-art" src="https://i.scdn.co/image/ab67616d000048511fefced4dce7bd953e5e40e6" alt="Views" class="w-12 h-12 object-cover border border-black flex-none" />
+                  <div class="min-w-0 flex flex-col">
+                    <span class="text-[8px] text-neutral-400 uppercase font-bold">now hovering</span>
+                    <span id="hover-title" class="text-[11px] font-bold truncate">Views</span>
+                    <span id="hover-artist" class="text-[9px] text-neutral-400 truncate">Drake</span>
+                  </div>
+                </div>
+
+                <!-- Floating items parent (covers will be injected here) -->
+                <div id="canvas-items-wrapper" class="absolute inset-0"></div>
+
+              </div>
+
+            </div>
+
+            <!-- Right: Windows 98 Retro Window for Spotify Player -->
+            <div class="w-full lg:w-[360px] flex-none bg-[#c0c0c0] p-1 border-2 border-t-white border-l-white border-b-neutral-700 border-r-neutral-700 shadow-md">
+              <!-- Window Title Bar -->
+              <div class="flex items-center justify-between p-1 select-none font-mono font-bold text-xs" style="background: linear-gradient(90deg, #000080, #1084d0); color: white;">
+                <div class="flex items-center gap-1.5 pl-1">
+                  <span>🎵</span>
+                  <span>spotify_playlist.lnk</span>
+                </div>
+                <!-- Windows 98 Window Controls -->
+                <div class="flex items-center gap-0.5">
+                  <button class="w-[14px] h-[14px] bg-[#c0c0c0] border border-t-white border-l-white border-b-[#808080] border-r-[#808080] active:border-inner text-black font-bold flex items-center justify-center text-[8px] cursor-pointer" style="line-height: 1;">_</button>
+                  <button class="w-[14px] h-[14px] bg-[#c0c0c0] border border-t-white border-l-white border-b-[#808080] border-r-[#808080] active:border-inner text-black font-bold flex items-center justify-center text-[8px] cursor-pointer" style="line-height: 1;">◽</button>
+                  <button class="w-[14px] h-[14px] bg-[#c0c0c0] border border-t-white border-l-white border-b-[#808080] border-r-[#808080] active:border-inner text-black font-bold flex items-center justify-center text-[8px] cursor-pointer" style="line-height: 1;">✕</button>
+                </div>
+              </div>
+              
+              <!-- Menu bar -->
+              <div class="flex items-center gap-2.5 px-2 py-0.5 font-mono text-[10px] text-black border-b border-white select-none">
+                <span class="hover:underline cursor-pointer">File</span>
+                <span class="hover:underline cursor-pointer">Play</span>
+                <span class="hover:underline cursor-pointer">View</span>
+                <span class="hover:underline cursor-pointer">Help</span>
+              </div>
+
+              <!-- Main Frame Client Area (indented bezel) -->
+              <div class="border-2 border-t-neutral-700 border-l-neutral-700 border-b-white border-r-white bg-black mt-1 p-0.5">
+                <iframe style="border-radius: 0px; border: none; background: transparent; display: block;" src="https://open.spotify.com/embed/playlist/1BpJyKjRJ3L5Cvj26BzWsk?utm_source=generator&theme=0" width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -218,6 +303,38 @@
 
     <script>
       let globeInstance = null;
+      let speedMultiplier = 0.55;
+      let floatingItems = [];
+      let animationFrameId = null;
+
+      // Album Covers database for floating canvas (using high-fidelity Spotify CDN URLs)
+      const albumCovers = [
+        { title: "Kelly Price (feat. Travis Scott)", artist: "Migos, Travis Scott", img: "https://i.scdn.co/image/ab67616d000048516275aeac316378b0dd4f31fd" },
+        { title: "Guwop (feat. Quavo, Offset and Young Scooter)", artist: "Young Thug, Quavo, Offset, Young Scooter", img: "https://i.scdn.co/image/ab67616d00004851d0c72291cd96834e199e1ff8" },
+        { title: "Fuck Up Some Commas", artist: "Future", img: "https://i.scdn.co/image/ab67616d00004851b2592bea12d840fd096ef965" },
+        { title: "PUFFIN ON ZOOTIEZ", artist: "Future", img: "https://i.scdn.co/image/ab67616d000048511692599c8c0f98e470c68106" },
+        { title: "Superhero (Heroes & Villains) [with Future & Chris Brown]", artist: "Metro Boomin, Future, Chris Brown", img: "https://i.scdn.co/image/ab67616d00004851c4fee55d7b51479627c31f89" },
+        { title: "712PM", artist: "Future", img: "https://i.scdn.co/image/ab67616d000048511692599c8c0f98e470c68106" },
+        { title: "Freestyle", artist: "Lil Baby", img: "https://i.scdn.co/image/ab67616d000048515067cc9332e2fdc69ea7b7a9" },
+        { title: "Digital Dash", artist: "Drake, Future", img: "https://i.scdn.co/image/ab67616d00004851d6adfbd3f091d6f2b9af6507" },
+        { title: "Solitaires (feat. Travis Scott)", artist: "Future, Travis Scott", img: "https://i.scdn.co/image/ab67616d000048517459c852e9479c56eceae52a" },
+        { title: "Inside The Mattress", artist: "Future", img: "https://i.scdn.co/image/ab67616d000048518f4d24124c0d5b6f413d9624" },
+        { title: "Stick Talk", artist: "Future", img: "https://i.scdn.co/image/ab67616d00004851b2592bea12d840fd096ef965" },
+        { title: "Solo", artist: "Future", img: "https://i.scdn.co/image/ab67616d000048517567ec7d3c07783e4f2111e0" },
+        { title: "Walk", artist: "Kodak Black", img: "https://i.scdn.co/image/ab67616d00004851cacc0def1e977f1e7ecefc97" },
+        { title: "Baby (Lil Baby feat. DaBaby)", artist: "Quality Control, Lil Baby, DaBaby", img: "https://i.scdn.co/image/ab67616d00004851f5c547a4335523f10a802f94" },
+        { title: "Bad Bad Bad (feat. Lil Baby)", artist: "Young Thug, Lil Baby", img: "https://i.scdn.co/image/ab67616d000048518da62aa4aa86bb58f67196e9" },
+        { title: "Let It Fly (feat. Travis Scott)", artist: "Lil Wayne, Travis Scott", img: "https://i.scdn.co/image/ab67616d00004851bb1138165ad4ec2306f4e886" },
+        { title: "Good For It", artist: "NAV", img: "https://i.scdn.co/image/ab67616d0000485109641cc11bfab19e890bbf58" },
+        { title: "Still Here", artist: "Drake", img: "https://i.scdn.co/image/ab67616d000048519416ed64daf84936d89e671c" },
+        { title: "Jersey", artist: "Future", img: "https://i.scdn.co/image/ab67616d00004851d6adfbd3f091d6f2b9af6507" },
+        { title: "Overdue (with Travis Scott)", artist: "Metro Boomin, Travis Scott", img: "https://i.scdn.co/image/ab67616d000048512887f8c05b5a9f1cb105be29" },
+        { title: "BLINDFOLD (feat. Lil Baby)", artist: "Gunna, Lil Baby", img: "https://i.scdn.co/image/ab67616d00004851624e7087da8b43a231d8adcf" },
+        { title: "T-Shirt", artist: "Migos", img: "https://i.scdn.co/image/ab67616d000048516275aeac316378b0dd4f31fd" },
+        { title: "Held Me Down", artist: "NAV, Metro Boomin", img: "https://i.scdn.co/image/ab67616d00004851000d429a820f8d8501f861ed" },
+        { title: "Still Think About You", artist: "A Boogie Wit da Hoodie", img: "https://i.scdn.co/image/ab67616d00004851f2baf6d743ae26f97777f026" },
+        { title: "Super Gremlin", artist: "Kodak Black", img: "https://i.scdn.co/image/ab67616d000048514c6aab6e1bf158b673188df3" }
+      ];
 
       function switchTab(tabId) {
         document.querySelectorAll('.tab-pane').forEach(pane => {
@@ -246,6 +363,15 @@
           setTimeout(() => {
             initGlobe();
           }, 10);
+        } else if (tabId === 'music') {
+          setTimeout(() => {
+            initFloatingCanvas();
+          }, 10);
+        } else {
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
         }
       }
 
@@ -391,6 +517,98 @@
             globeInstance.height(container.clientHeight);
           }
         });
+      }
+
+      function setSpeed(val) {
+        speedMultiplier = parseFloat(val);
+        const speedValEl = document.getElementById('canvas-speed-val');
+        if (speedValEl) speedValEl.innerText = `${speedMultiplier.toFixed(2)}x`;
+      }
+
+      function initFloatingCanvas() {
+        const wrapper = document.getElementById('canvas-items-wrapper');
+        const container = document.getElementById('music-canvas-container');
+        if (!wrapper || !container) return;
+
+        wrapper.innerHTML = '';
+        floatingItems = [];
+
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+
+        albumCovers.forEach((album, index) => {
+          const img = document.createElement('img');
+          img.src = album.img;
+          img.alt = album.title;
+          
+          const size = Math.floor(Math.random() * 20) + 54; // size range: 54px - 74px
+          img.className = "absolute border border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.4)] cursor-pointer hover:border-[#39ff14] hover:shadow-[0_0_10px_#39ff14] hover:scale-110 transition-all duration-200 z-10 origin-center object-cover";
+          img.style.width = `${size}px`;
+          img.style.height = `${size}px`;
+
+          const x = Math.random() * (containerWidth - size);
+          const y = Math.random() * (containerHeight - size);
+
+          const vx = (Math.random() * 3 - 1.5) || 0.5;
+          const vy = (Math.random() * 3 - 1.5) || -0.5;
+
+          img.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+          wrapper.appendChild(img);
+
+          img.onmouseenter = () => {
+            const hoverArt = document.getElementById('hover-art');
+            const hoverTitle = document.getElementById('hover-title');
+            const hoverArtist = document.getElementById('hover-artist');
+            if (hoverArt) hoverArt.src = album.img;
+            if (hoverTitle) hoverTitle.innerText = album.title;
+            if (hoverArtist) hoverArtist.innerText = album.artist;
+          };
+
+          floatingItems.push({
+            el: img,
+            x: x,
+            y: y,
+            vx: vx,
+            vy: vy,
+            size: size
+          });
+        });
+
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        animateCovers();
+      }
+
+      function animateCovers() {
+        const container = document.getElementById('music-canvas-container');
+        if (!container) return;
+
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+
+        floatingItems.forEach(item => {
+          item.x += item.vx * speedMultiplier;
+          item.y += item.vy * speedMultiplier;
+
+          if (item.x <= 0) {
+            item.x = 0;
+            item.vx = -item.vx;
+          } else if (item.x >= containerWidth - item.size) {
+            item.x = containerWidth - item.size;
+            item.vx = -item.vx;
+          }
+
+          if (item.y <= 0) {
+            item.y = 0;
+            item.vy = -item.vy;
+          } else if (item.y >= containerHeight - item.size) {
+            item.y = containerHeight - item.size;
+            item.vy = -item.vy;
+          }
+
+          item.el.style.transform = `translate3d(${item.x}px, ${item.y}px, 0)`;
+        });
+
+        animationFrameId = requestAnimationFrame(animateCovers);
       }
 
       document.addEventListener('DOMContentLoaded', () => {
