@@ -29,7 +29,7 @@
       <div class="flex flex-col lg:flex-row gap-3 text-lg">
         <article class="text-black text-lg prose-p:m-0 flex flex-col gap-4">
           <p>
-            Hi! I'm Mikhail, a fourth-year CS student at Carleton University and a Cloud Operations & Automation Intern at Porsche.
+            Hi! I'm Mikhail, a fourth-year CS student at Carleton University and a Software & Cloud Infrastructure Engineer intern at Porsche.
           </p>
           <p>
             Most of my time goes into programming, building side projects, and convincing myself that this next idea will only take a weekend.
@@ -277,13 +277,334 @@
 
         <!-- Wins Pane -->
         <div id="tab-pane-wins" class="tab-pane hidden">
-          <div class="font-mono text-sm border border-black dark:border-white p-4 bg-gray-50 dark:bg-neutral-900 leading-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]">
-            <span class="text-green-600 dark:text-green-400">mikhail@carleton:~$</span> cat ~/achievements.txt<br>
-            <br>
-            🏆 Cloud Operations & Automation Intern @ Porsche (2025/2026)<br>
-            🎓 Fourth-Year Computer Science @ Carleton University<br>
-            🥋 Brazilian Jiu-Jitsu Purple Belt<br>
-            🏍️ Successfully rebuilt 2/3 motorcycles without any leftover parts
+          <!-- Beige/Sand/Light cabinet container matching the screenshot -->
+          <div class="cabinet-container p-6 flex flex-col gap-6 shadow-md select-none relative font-sans text-black" id="trophy-cabinet-box">
+            
+            <!-- Cabinet Header -->
+            <div class="mb-4 select-none border-b border-gray-300 dark:border-neutral-800 pb-4">
+              <h2 class="text-3xl font-bold font-sans text-neutral-800 dark:text-neutral-200 m-0">Trophy Case</h2>
+              <div class="text-xs text-neutral-500 font-sans mt-2 leading-relaxed">
+                Mostly just milestones I wanted to keep somewhere. This page is meant to feel more like a shelf than a scoreboard.
+              </div>
+            </div>
+
+            <!-- Grid container for shelves -->
+            <div class="flex flex-col gap-10">
+              
+              <!-- Shelf 1: Hackathons 1 -->
+              <div class="flex flex-col">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-2 pb-1 items-end justify-items-center">
+                  
+                  <!-- Item 1: QuestCraft -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #4CAF50;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">Best Use of Gen AI @ McGill CodeJam 2025</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">QuestCraft</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Real-world RPG city quests with AI NPCs.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Turns real-world city exploration into AI-generated RPG quests with dynamic NPC interactions and multiplayer collaboration.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 2: SoundScape -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #2196F3;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">Top 12 Finalist @ Hack the North 2024</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">SoundScape</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Audio descriptions for visually impaired.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Accessibility platform converting surroundings into intelligent audio descriptions for visually impaired users.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 3: EcoSwap -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #F44336;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">Rookie Excellence @ ConUHacks IX 2024</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">EcoSwap</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Sustainable item-exchange for students.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Gamified sustainable item-exchange marketplace for university students with trust scoring and rewards.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 4: ParkPilot -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #00BCD4;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">2nd Place Winner @ GTA Tech Sprint 2024</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">ParkPilot</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Predictive parking using ML & live maps.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Predictive parking availability using traffic data, ML models, and live maps. Won 2nd place, Smart Cities track.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="shelf-wood w-full mt-2"></div>
+              </div>
+
+              <!-- Shelf 2: Hackathons 2 & Porsche -->
+              <div class="flex flex-col">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-2 pb-1 items-end justify-items-center">
+                  
+                  <!-- Item 5: StudySphere -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #FF9800;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">Judges' Choice @ Ottawa Innovation 2023</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">StudySphere</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Virtual study rooms with productivity analytics.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Collaborative virtual study rooms with adaptive environments and productivity analytics. Won Judges' Choice Award.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 6: BudgetBuddy -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #9C27B0;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">Best Student Impact @ MontHacks 2023</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">BudgetBuddy</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          AI financial coaching for students.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          AI financial coaching for students managing spending, savings, and tuition planning. Best Student Impact project.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 7: PhishGuard -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #4CAF50;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">Cybersecurity Prize @ Capital Cyber 2023</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">PhishGuard</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Browser extension detecting phishing.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Browser extension detecting phishing attempts and explaining threats in plain language. Cybersecurity Innovation Prize.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 8: Porsche Internship -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #FFD54F;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 truncate w-full">Porsche Internship</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-0.5 leading-tight truncate w-full">Porsche - Software & Cloud Infrastructure Engineer Intern</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Software & Cloud Infrastructure Engineering.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Software & Cloud Infrastructure Engineer intern at Porsche, Ottawa. Working on cloud operations and automation pipelines.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="shelf-wood w-full mt-2"></div>
+              </div>
+
+              <!-- Shelf 3: Athletics & Motorcycle builder -->
+              <div class="flex flex-col">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-2 pb-1 items-end justify-items-center">
+                  
+                  <!-- Item 9: BJJ Purple Belt -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #6A1B9A;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 truncate w-full">BJJ Purple Belt</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-0.5 leading-tight truncate w-full">Martial Arts Rank - 2025</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Intermediate-to-advanced grappling rank.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Successfully achieved the BJJ Purple Belt rank, representing years of active sparring, technical mastery, and sparring progression.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 10: Varsity Wrestling -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #2196F3;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 truncate w-full">Varsity Wrestling</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-0.5 leading-tight truncate w-full">Carleton Athletics - Team Member</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Carleton varsity wrestling athlete.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Trained with the Carleton varsity wrestling program, focusing on high conditioning, strength, and takedowns.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 11: 3-Time Gold Medalist -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #FFD54F;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 truncate w-full">3-Time Gold Medalist</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-0.5 leading-tight truncate w-full">Regional BJJ - 155lb Champion</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Gold medals at regional 155lb class.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Three-time gold medal placement at the 155lb lightweight division in regional Brazilian Jiu-Jitsu tournaments.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item 12: Motorcycle Builder -->
+                  <div class="flex flex-col items-center gap-2">
+                    <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #A1887F;">
+                      <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
+                      <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
+                      <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
+                      <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
+                    </svg>
+                    <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
+                      <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 truncate w-full">Motorcycle Builder</div>
+                      <div class="text-[9px] text-neutral-500 font-mono mt-0.5 leading-tight truncate w-full">Garage Engineering - 100% Profit</div>
+                      <div class="relative flex-1 mt-2">
+                        <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
+                          Rebuilt 7 motorcycles and resold for profit.
+                        </div>
+                        <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
+                          Successfully bought, diagnosed, restored, rebuilt, and resold 7 vintage motorcycles for profit in my spare time.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="shelf-wood w-full mt-2"></div>
+              </div>
+
+            </div>
+
           </div>
         </div>
 

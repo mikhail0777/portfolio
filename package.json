@@ -14,7 +14,7 @@
     "watch:html": "nodemon --watch src -e py,html --exec \"python -m uv run python src/build.py --output dist\"",
     "flask-dev": "python -m uv run python -m flask --app src/dev-server.py --debug run --port 8000",
     "dev": "concurrently \"pnpm watch:html\" \"pnpm watch:tailwind\" \"pnpm flask-dev\"",
-    "build": "./build.sh",
+    "build": "node build.js",
     "preview": "npx serve dist/"
   }
 }

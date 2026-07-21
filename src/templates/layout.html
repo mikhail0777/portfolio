@@ -32,33 +32,52 @@
   <script>
     /*to prevent Firefox FOUC, this must be here*/
     let FF_FOUC_FIX;
+    
+    // Theme initializer to prevent FOUC
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'modern-dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (savedTheme === 'terminal-green') {
+        document.documentElement.classList.add('crt');
+      }
+    })();
   </script>
 </head>
 <body>
   <main
     class="flex min-h-screen flex-col max-w-5xl mx-auto px-4 py-4 sm:py-8 leading-5 dark:bg-black dark:text-white font-sans"
   >
-    <div class="flex justify-between flex-wrap mb-2">
+    <div class="flex justify-between items-center flex-wrap mb-2 gap-3">
       <a href="/">
         <h1 class="font-mono text-2xl font-bold">{{ name }}</h1>
       </a>
       <div
-        class="flex flex-col sm:flex-row justify-between gap-2 align-middle items-center my-1"
+        class="flex flex-col sm:flex-row justify-between gap-3 align-middle items-center my-1"
       >
-        {% call button("https://www.linkedin.com/in/mikhail-simanian-363990290/", "w-32 bg-[#0077b5] text-white") %}
-          <div style="mask-image: url('/assets/linkedin.svg');" class="icon"></div>
-          <span class="ms-1">LinkedIn</span>
-        {% endcall %}
-        {%
-          call
-          button("https://github.com/mikhail0777", "w-32")
-        %}
-          <div style="mask-image: url('/assets/github.svg');" class="icon"></div>
-          <span class="ms-1">GitHub</span>
-        {% endcall %}
-        <!-- {% call button("/assets/resume.pdf", "w-32") %}
-          <span class="ms-1">Resume</span>
-        {% endcall %} -->
+        <!-- Retro Theme Switcher -->
+        <div class="flex flex-row items-center border border-black dark:border-white p-1 gap-1 font-mono text-[11px] shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.4)]" style="border-radius: 0px;">
+          <span class="px-1 font-bold uppercase select-none text-[10px]">Theme:</span>
+          <button onclick="setTheme('modern-dark')" class="theme-btn px-2 py-0.5 border border-black dark:border-white font-mono text-[10px]" style="border-radius: 0px;" id="btn-theme-modern-dark">Dark</button>
+          <button onclick="setTheme('win95')" class="theme-btn px-2 py-0.5 border border-black dark:border-white font-mono text-[10px]" style="border-radius: 0px;" id="btn-theme-win95">Win95</button>
+          <button onclick="setTheme('terminal-green')" class="theme-btn px-2 py-0.5 border border-black dark:border-white font-mono text-[10px]" style="border-radius: 0px;" id="btn-theme-terminal-green">CRT</button>
+        </div>
+
+        <div class="flex flex-row gap-2">
+          {% call button("https://www.linkedin.com/in/mikhail-simanian-363990290/", "w-32 bg-[#0077b5] text-white") %}
+            <div style="mask-image: url('/assets/linkedin.svg');" class="icon"></div>
+            <span class="ms-1">LinkedIn</span>
+          {% endcall %}
+          {%
+            call
+            button("https://github.com/mikhail0777", "w-32")
+          %}
+            <div style="mask-image: url('/assets/github.svg');" class="icon"></div>
+            <span class="ms-1">GitHub</span>
+          {% endcall %}
+          <!-- {% call button("/assets/resume.pdf", "w-32") %}
+            <span class="ms-1">Resume</span>
+          {% endcall %} -->
+        </div>
       </div>
     </div>
     {% block content %}{% endblock %}
@@ -75,5 +94,34 @@
     {% endcall %}
   </main>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'terminal-green') {
+        document.documentElement.classList.add('crt');
+      } else {
+        document.documentElement.classList.remove('crt');
+      }
+      localStorage.setItem('theme', theme);
+      
+      // Update theme buttons styling
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black', 'font-bold');
+        btn.classList.add('hover:bg-black', 'hover:text-white', 'dark:hover:bg-white', 'dark:hover:text-black');
+      });
+      
+      const activeBtn = document.getElementById(`btn-theme-${theme}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black', 'font-bold');
+        activeBtn.classList.remove('hover:bg-black', 'hover:text-white', 'dark:hover:bg-white', 'dark:hover:text-black');
+      }
+    }
+
+    // Initialize themes
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || 'modern-dark';
+      setTheme(savedTheme);
+    });
+  </script>
 </body>
 </html>

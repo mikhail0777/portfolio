@@ -60,3 +60,353 @@ article {
 
   background-color: currentColor;
 }
+
+/* Theme system variables */
+:root {
+  --page-bg: #121212;
+  --container-bg: #000000;
+  --text-main: #ffffff;
+  --border-main: #ffffff;
+  --trophy-glow: rgba(234, 179, 8, 0.6);
+  --cabinet-bg: #efebe4;
+}
+
+/* Custom retro styles for Win95 theme */
+[data-theme="win95"] {
+  --page-bg: #008080 !important;
+  --container-bg: #c0c0c0 !important;
+  --text-main: #000000 !important;
+  --border-main: #808080 !important;
+  --trophy-glow: rgba(0, 0, 0, 0.4);
+  --cabinet-bg: #dfdfdf !important;
+}
+
+[data-theme="win95"] body {
+  background-color: #008080 !important;
+  color: #000000 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji" !important;
+}
+
+[data-theme="win95"] main {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+  border: 2px solid !important;
+  border-top-color: #dfdfdf !important;
+  border-left-color: #dfdfdf !important;
+  border-right-color: #808080 !important;
+  border-bottom-color: #808080 !important;
+  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="win95"] a, 
+[data-theme="win95"] h1, 
+[data-theme="win95"] h2, 
+[data-theme="win95"] h3, 
+[data-theme="win95"] h4, 
+[data-theme="win95"] h5, 
+[data-theme="win95"] h6, 
+[data-theme="win95"] p, 
+[data-theme="win95"] span, 
+[data-theme="win95"] div, 
+[data-theme="win95"] li {
+  color: #000000 !important;
+}
+
+[data-theme="win95"] fieldset {
+  border: 2px solid !important;
+  border-top-color: #808080 !important;
+  border-left-color: #808080 !important;
+  border-right-color: #dfdfdf !important;
+  border-bottom-color: #dfdfdf !important;
+  background-color: #c0c0c0 !important;
+}
+
+[data-theme="win95"] legend h6 {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+}
+
+[data-theme="win95"] a.flex, 
+[data-theme="win95"] button.tab-btn {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+  border-top: 2px solid #dfdfdf !important;
+  border-left: 2px solid #dfdfdf !important;
+  border-right: 2px solid #808080 !important;
+  border-bottom: 2px solid #808080 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 0px !important;
+}
+
+[data-theme="win95"] a.flex:hover, 
+[data-theme="win95"] button.tab-btn:hover {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+}
+
+[data-theme="win95"] a.flex:active, 
+[data-theme="win95"] button.tab-btn:active, 
+[data-theme="win95"] button.tab-btn.bg-black {
+  border-top: 2px solid #808080 !important;
+  border-left: 2px solid #808080 !important;
+  border-right: 2px solid #dfdfdf !important;
+  border-bottom: 2px solid #dfdfdf !important;
+  background-color: #dfdfdf !important;
+  color: #000000 !important;
+}
+
+/* Win95 scrollbars */
+[data-theme="win95"] ::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+  background-color: #dfdfdf;
+}
+[data-theme="win95"] ::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+  border-top: 2px solid #dfdfdf;
+  border-left: 2px solid #dfdfdf;
+  border-right: 2px solid #808080;
+  border-bottom: 2px solid #808080;
+}
+
+/* Custom styles for Terminal Green theme */
+[data-theme="terminal-green"] {
+  --page-bg: #000000 !important;
+  --container-bg: #050505 !important;
+  --text-main: #39ff14 !important;
+  --border-main: #39ff14 !important;
+  --trophy-glow: rgba(57, 255, 20, 0.6);
+  --cabinet-bg: #000000 !important;
+}
+
+[data-theme="terminal-green"] body {
+  background-color: #000000 !important;
+  color: #39ff14 !important;
+  font-family: "IBM Plex Mono", Monaco, Consolas, Courier, monospace !important;
+  text-shadow: 0 0 4px rgba(57, 255, 20, 0.5) !important;
+}
+
+[data-theme="terminal-green"] main {
+  background-color: #000000 !important;
+  color: #39ff14 !important;
+  border: 2px solid #39ff14 !important;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.2) !important;
+}
+
+[data-theme="terminal-green"] a, 
+[data-theme="terminal-green"] h1, 
+[data-theme="terminal-green"] h2, 
+[data-theme="terminal-green"] h3, 
+[data-theme="terminal-green"] h4, 
+[data-theme="terminal-green"] h5, 
+[data-theme="terminal-green"] h6, 
+[data-theme="terminal-green"] p, 
+[data-theme="terminal-green"] span, 
+[data-theme="terminal-green"] div, 
+[data-theme="terminal-green"] li {
+  color: #39ff14 !important;
+  text-shadow: 0 0 4px rgba(57, 255, 20, 0.5) !important;
+}
+
+[data-theme="terminal-green"] fieldset {
+  border: 1px solid #39ff14 !important;
+  background-color: #000000 !important;
+  color: #39ff14 !important;
+  box-shadow: none !important;
+}
+
+[data-theme="terminal-green"] a.flex, 
+[data-theme="terminal-green"] button.tab-btn {
+  background-color: #000000 !important;
+  color: #39ff14 !important;
+  border: 1px solid #39ff14 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 0px !important;
+}
+
+[data-theme="terminal-green"] a.flex:hover, 
+[data-theme="terminal-green"] button.tab-btn:hover, 
+[data-theme="terminal-green"] button.tab-btn.bg-black {
+  background-color: #39ff14 !important;
+  color: #000000 !important;
+}
+[data-theme="terminal-green"] a.flex:hover *, 
+[data-theme="terminal-green"] button.tab-btn:hover *, 
+[data-theme="terminal-green"] button.tab-btn.bg-black * {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="terminal-green"] a:hover {
+  text-decoration: underline !important;
+}
+
+/* CRT Screen scanline overlay */
+.crt::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 99999;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Trophy Cabinet custom styling */
+.cabinet-container {
+  background-color: var(--cabinet-bg);
+  border: 1px solid var(--border-main);
+  border-radius: 0px;
+}
+[data-theme="win95"] .cabinet-container {
+  border: 2px solid !important;
+  border-top-color: #808080 !important;
+  border-left-color: #808080 !important;
+  border-right-color: #dfdfdf !important;
+  border-bottom-color: #dfdfdf !important;
+}
+
+.shelf-wood {
+  border-bottom: 8px solid #8B5A2B;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+[data-theme="win95"] .shelf-wood {
+  border-bottom: 8px solid #808080;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #404040;
+}
+[data-theme="terminal-green"] .shelf-wood {
+  border-bottom: 2px solid #39ff14;
+  box-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+}
+
+.trophy-card {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 0px;
+  
+  /* Explicit larger dimensions to override Tailwind utilities */
+  width: 210px !important;
+  height: 136px !important;
+  padding: 10px !important;
+}
+@media (min-width: 640px) {
+  .trophy-card {
+    width: 236px !important;
+    height: 154px !important;
+    padding: 12px !important;
+  }
+}
+.trophy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.1);
+}
+[data-theme="win95"] .trophy-card {
+  background-color: #ffffff !important;
+  border: 2px solid !important;
+  border-top-color: #808080 !important;
+  border-left-color: #808080 !important;
+  border-right-color: #dfdfdf !important;
+  border-bottom-color: #dfdfdf !important;
+  box-shadow: none !important;
+}
+[data-theme="terminal-green"] .trophy-card {
+  background-color: #0d0d0d !important;
+  border: 1px solid #39ff14 !important;
+  box-shadow: none !important;
+}
+
+.hover-swap-container {
+  position: relative;
+  overflow: hidden;
+}
+.hover-swap-short {
+  transition: opacity 0.25s ease;
+  opacity: 1;
+}
+.hover-swap-long {
+  transition: opacity 0.25s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.trophy-card:hover .hover-swap-short {
+  opacity: 0;
+}
+.trophy-card:hover .hover-swap-long {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.trophy-icon-color {
+  fill: var(--trophy-color);
+  stroke: var(--trophy-color);
+}
+
+/* Custom font scaling for trophy card layout */
+.trophy-card .hover-swap-short {
+  font-size: 13.5px !important;
+  line-height: 1.45 !important;
+}
+.trophy-card .hover-swap-long {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+.trophy-card .font-bold {
+  font-size: 15.5px !important;
+  line-height: 1.35 !important;
+}
+.trophy-card .font-mono {
+  font-size: 11.5px !important;
+  line-height: 1.3 !important;
+}
+
+/* Prevent grey/neutral text anywhere on the page, force black (or white in dark theme) */
+.text-gray-300, 
+.text-gray-400, 
+.text-gray-500, 
+.text-gray-600, 
+.text-neutral-300, 
+.text-neutral-400, 
+.text-neutral-500, 
+.text-neutral-600 {
+  color: #000000 !important;
+}
+
+.dark .text-gray-300, 
+.dark .text-gray-400, 
+.dark .text-gray-500, 
+.dark .text-gray-600, 
+.dark .text-neutral-300, 
+.dark .text-neutral-400, 
+.dark .text-neutral-500, 
+.dark .text-neutral-600 {
+  color: #ffffff !important;
+}
+
+[data-theme="win95"] .text-gray-300, 
+[data-theme="win95"] .text-gray-400, 
+[data-theme="win95"] .text-gray-500, 
+[data-theme="win95"] .text-gray-600, 
+[data-theme="win95"] .text-neutral-300, 
+[data-theme="win95"] .text-neutral-400, 
+[data-theme="win95"] .text-neutral-500, 
+[data-theme="win95"] .text-neutral-600 {
+  color: #000000 !important;
+}
+
+[data-theme="terminal-green"] .text-gray-300, 
+[data-theme="terminal-green"] .text-gray-400, 
+[data-theme="terminal-green"] .text-gray-500, 
+[data-theme="terminal-green"] .text-gray-600, 
+[data-theme="terminal-green"] .text-neutral-300, 
+[data-theme="terminal-green"] .text-neutral-400, 
+[data-theme="terminal-green"] .text-neutral-500, 
+[data-theme="terminal-green"] .text-neutral-600 {
+  color: #39ff14 !important;
+}
+
+
