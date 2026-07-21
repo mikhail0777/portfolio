@@ -5,6 +5,17 @@ import subprocess
 from threading import Thread
 from glob import glob
 
+# Check if cwebp is available on the system path
+cwebp_available = True
+try:
+    subprocess.run(["cwebp", "-version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+except FileNotFoundError:
+    cwebp_available = False
+
+if not cwebp_available:
+    print("Warning: 'cwebp' command not found. Skipping webp image optimization.")
+    # Exit cleanly without modifying HTML files so original images are used
+    exit(0)
 
 def is_img(fname: str):
     ext = os.path.splitext(fname)[1].lower()
@@ -17,11 +28,12 @@ def optimized_name(fname: str):
 
 def optimize_image(fname: str):
     outname = optimized_name(fname)
-    subprocess.run(["cwebp", "-q", "80", fname, "-o", outname, "-quiet"], check=True)
-
-    os.remove(fname)
-
-    print(f"Optimized {fname}")
+    try:
+        subprocess.run(["cwebp", "-q", "80", fname, "-o", outname, "-quiet"], check=True)
+        os.remove(fname)
+        print(f"Optimized {fname}")
+    except Exception as e:
+        print(f"Failed to optimize {fname}: {e}")
 
 
 imgs = [f for f in glob("dist/assets/*", recursive=True) if is_img(f)]
