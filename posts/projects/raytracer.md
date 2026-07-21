@@ -5,8 +5,6 @@ coverImage: "/assets/raytrace.png"
 order: -2
 ---
 
-![Ray Tracer in Rust](/assets/raytrace.png)
-
 The cover image is rendered for 512 samples per pixel, 1280x720, and took about 2 minutes to render.
 It was tone-mapped in Blender's compositor.
 
