@@ -206,13 +206,57 @@ og = og_tags(
 twitter = twitter_tags({**seo_common, "card": "summary"})
 seotags = og + twitter
 
-index = env.get_template("index.html")
-rendered = index.render(lists=lists, name=name, title=name)
-soup = bs(rendered)
-for item in seotags:
-    soup.head.append(bs(item))
+pages_to_render = [
+    ("index.html", "index.html", name),
+    ("travel.html", "travel.html", f"{name} | Travel"),
+    ("music.html", "music.html", f"{name} | Music"),
+    ("wins.html", "wins.html", f"{name} | Wins"),
+    ("lore.html", "lore.html", f"{name} | Lore"),
+    ("toolbox.html", "toolbox.html", f"{name} | Toolbox"),
+]
 
-for img_tag in soup.find_all("img"):
-    img_tag_rule(img_tag)
+for template_name, output_name, page_title in pages_to_render:
+    try:
+        tmpl = env.get_template(template_name)
+        rendered = tmpl.render(lists=lists, name=name, title=page_title)
+        soup = bs(rendered)
+        
+        # Build page-specific SEO tags
+        page_desc = seo_common["description"]
+        if "Travel" in page_title:
+            page_desc = f"Mikhail's travel experiences and interactive globe map."
+        elif "Music" in page_title:
+            page_desc = f"Mikhail's music album canvas and spotify logs."
+        elif "Wins" in page_title:
+            page_desc = f"Mikhail's trophy cabinet of awards and milestones."
+        elif "Lore" in page_title:
+            page_desc = f"Mikhail's life FAQs and random stories."
+            
+        page_seo_common = {
+            **seo_common, 
+            "title": page_title, 
+            "description": page_desc,
+            "url": urljoin(url, f"/{output_name}")
+        }
+        
+        page_og = og_tags(
+            {
+                **page_seo_common,
+                "type": "profile",
+                "profile:first_name": first_name,
+                "profile:last_name": last_name,
+                "profile:username": generic_username,
+            }
+        )
+        page_twitter = twitter_tags({**page_seo_common, "card": "summary"})
+        page_seotags = page_og + page_twitter
+        
+        for item in page_seotags:
+            soup.head.append(bs(item))
 
-write_output(soup.encode_contents().decode("utf-8"), "index.html")
+        for img_tag in soup.find_all("img"):
+            img_tag_rule(img_tag)
+
+        write_output(soup.encode_contents().decode("utf-8"), output_name)
+    except Exception as e:
+        print(f"Error compiling {template_name}: {e}")

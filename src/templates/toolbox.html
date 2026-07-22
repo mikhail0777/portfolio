@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="flex flex-col gap-4">
+    {% call fieldset("cat ~/toolbox.md") %}
+      <div class="font-mono text-sm border border-black dark:border-white p-4 bg-gray-50 dark:bg-neutral-900 leading-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]">
+        <span class="text-green-600 dark:text-green-400">mikhail@carleton:~$</span> cat ~/toolbox.md<br>
+        <br>
+        # Technical Toolbox<br>
+        - **Languages:** Python, JavaScript, TypeScript, Rust, C++, C, HTML, CSS, SQL<br>
+        - **Frameworks & Libs:** Next.js, Flask, TailwindCSS, React, Jinja2<br>
+        - **Tools & Platforms:** Git, GitHub Actions, Cloudflare Pages, uv, pnpm, Docker, SQLite
+      </div>
+    {% endcall %}
+  </div>
+{% endblock %}
