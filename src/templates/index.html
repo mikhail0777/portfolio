@@ -1,16 +1,50 @@
 {% extends "layout.html" %}
 
 {% block content %}
+  <style>
+    @keyframes winampMarquee {
+      0% { transform: translate3d(100%, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+    .winamp-marquee {
+      display: inline-block;
+      animation: winampMarquee 12s linear infinite;
+    }
+    @keyframes spinRecord {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .spin-album-art {
+      animation: spinRecord 10s linear infinite;
+      border-radius: 50%;
+    }
+    .spin-paused {
+      animation-play-state: paused;
+    }
+  </style>
   <div class="flex flex-col gap-4">
+    <!-- <WhoAmI /> -->
     {% call fieldset("cat README.md") %}
-      <div class="flex flex-col md:flex-row gap-6 items-start font-mono text-sm leading-6">
-        <div class="flex-1 text-left">
-          <span class="text-green-600 dark:text-green-400">mikhail@carleton:~$</span> cat README.md<br>
-          <br>
-          hey there! i'm mikhail, a student at carleton university studying computer science. i build things, break things, and then build them again but slightly better. i'm really interested in systems programming, software performance, and quantitative trading models.
-        </div>
+      <div class="flex flex-col lg:flex-row gap-3 text-lg">
+        <article class="text-black dark:text-neutral-200 text-lg prose-p:m-0 flex flex-col gap-4">
+          <p>
+            Hi! I'm Mikhail, a fourth-year CS student at Carleton University and a Software & Cloud Infrastructure Engineer intern at Porsche.
+          </p>
+          <p>
+            Most of my time goes into programming, building side projects, and convincing myself that this next idea will only take a weekend.
+          </p>
+          <p>
+            When I'm not working on something, I'm probably training Brazilian Jiu-Jitsu (purple belt), playing video games, fixing motorcycles, or browsing Marketplace for bikes I definitely don't need.
+          </p>
+          <p>
+            Currently interning at Porsche and worked as a private IT consultant for my mom, specializing in forgotten passwords and accidental Caps Lock activation.
+          </p>
+          <p>
+            I also like working on projects and leaving them unfinished. My GitHub has enough abandoned side projects to qualify as a digital archaeological site.
+          </p>
+        </article>
         <img
-          src="/assets/me-small.jpg"
+          src="/assets/mikhail.jpg"
           alt="Mikhail"
           class="h-[350px] object-cover border border-black dark:border-white shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]"
           loading="eager"
