@@ -40,6 +40,11 @@
       if (savedTheme === 'terminal-green') {
         document.documentElement.classList.add('crt');
       }
+      if (savedTheme === 'modern-dark' || savedTheme === 'terminal-green') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     })();
   </script>
 </head>
@@ -57,7 +62,8 @@
         <!-- Retro Theme Switcher -->
         <div class="flex flex-row items-center border border-black dark:border-white p-1 gap-1 font-mono text-[11px] shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.4)]" style="border-radius: 0px;">
           <span class="px-1 font-bold uppercase select-none text-[10px]">Theme:</span>
-          <button onclick="setTheme('modern-dark')" class="theme-btn px-2 py-0.5 border border-black dark:border-white font-mono text-[10px]" style="border-radius: 0px;" id="btn-theme-modern-dark">Dark</button>
+          <button onclick="setTheme('modern-dark')" class="theme-btn px-2 py-0.5 border border-black dark:border-white font-mono text-[10px]" style="border-radius: 0px;" id="btn-theme-modern-dark">🌙 Dark</button>
+          <button onclick="setTheme('modern-light')" class="theme-btn px-2 py-0.5 border border-black dark:border-white font-mono text-[10px]" style="border-radius: 0px;" id="btn-theme-modern-light">☀️ Light</button>
           <button onclick="setTheme('win95')" class="theme-btn px-2 py-0.5 border border-black dark:border-white font-mono text-[10px]" style="border-radius: 0px;" id="btn-theme-win95">Win95</button>
           <button onclick="setTheme('terminal-green')" class="theme-btn px-2 py-0.5 border border-black dark:border-white font-mono text-[10px]" style="border-radius: 0px;" id="btn-theme-terminal-green">CRT</button>
         </div>
@@ -101,6 +107,12 @@
         document.documentElement.classList.add('crt');
       } else {
         document.documentElement.classList.remove('crt');
+      }
+
+      if (theme === 'modern-dark' || theme === 'terminal-green') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
       }
       localStorage.setItem('theme', theme);
       
