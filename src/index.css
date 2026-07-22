@@ -174,6 +174,22 @@ article {
   border-bottom: 2px solid #808080;
 }
 
+/* Projects grid hover override for Win95 theme */
+[data-theme="win95"] a:hover > div {
+  background-color: #000080 !important;
+}
+[data-theme="win95"] a:hover > div h1,
+[data-theme="win95"] a:hover > div h2,
+[data-theme="win95"] a:hover > div h3,
+[data-theme="win95"] a:hover > div h4,
+[data-theme="win95"] a:hover > div h5,
+[data-theme="win95"] a:hover > div h6,
+[data-theme="win95"] a:hover > div p,
+[data-theme="win95"] a:hover > div span,
+[data-theme="win95"] a:hover > div div {
+  color: #ffffff !important;
+}
+
 /* Custom styles for Terminal Green theme */
 [data-theme="terminal-green"] {
   --page-bg: #000000 !important;
