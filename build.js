@@ -2,6 +2,15 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+function getUvCommand() {
+  try {
+    execSync('uv --version', { stdio: 'ignore' });
+    return 'uv';
+  } catch (e) {
+    return 'python -m uv';
+  }
+}
+
 function cleanAndBuild() {
   try {
     console.log('Cleaning dist directory...');
@@ -14,7 +23,8 @@ function cleanAndBuild() {
     execSync('npx tailwindcss -i ./src/index.css -o ./dist/index.css --minify', { stdio: 'inherit' });
 
     console.log('Building HTML files...');
-    execSync('python -m uv run python src/build.py --output dist --no-clean', { stdio: 'inherit' });
+    const uvCmd = getUvCommand();
+    execSync(`${uvCmd} run python src/build.py --output dist --no-clean`, { stdio: 'inherit' });
 
     console.log('Copying static assets...');
     const publicDir = 'public';
@@ -30,7 +40,7 @@ function cleanAndBuild() {
     console.log('Optimizing images...');
     const optScript = path.join('src', 'optimize_images.py');
     if (fs.existsSync(optScript)) {
-      execSync('python -m uv run python src/optimize_images.py', { stdio: 'inherit' });
+      execSync(`${uvCmd} run python src/optimize_images.py`, { stdio: 'inherit' });
     }
 
     console.log('Build completed successfully!');
