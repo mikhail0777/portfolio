@@ -59,6 +59,7 @@ jobs:
       #     path: ./dist
 
       - name: Publish
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
