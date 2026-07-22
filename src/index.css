@@ -6,6 +6,10 @@ img {
   @apply max-w-full h-auto w-auto;
 }
 
+body {
+  @apply bg-white dark:bg-black;
+}
+
 h1 {
   @apply text-4xl;
 }
