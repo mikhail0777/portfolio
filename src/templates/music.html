@@ -9,7 +9,7 @@
         <div class="flex-1 w-full relative">
           
           <!-- Floating Album Canvas Wrapper -->
-          <div id="music-canvas-container" class="w-full h-[580px] relative overflow-hidden bg-black border border-black dark:border-white shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]" style="background-color: #0c0c0e; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px;">
+          <div id="music-canvas-container" class="w-full h-[680px] relative overflow-hidden bg-black border border-black dark:border-white shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.6)]" style="background-color: #0c0c0e; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px;">
             
             <!-- music.exe Control Panel (Top-Left overlay) -->
             <div class="absolute top-3 left-3 z-30 bg-white/95 dark:bg-neutral-900/95 p-3 border border-black dark:border-white/40 shadow-md font-mono text-[10px] w-[180px] leading-relaxed text-black dark:text-white select-none">
@@ -46,7 +46,7 @@
         </div>
 
         <!-- Right: Windows 98 Retro Window for Spotify Player -->
-        <div class="w-full lg:w-[360px] flex-none bg-[#c0c0c0] p-1 border-2 border-t-white border-l-white border-b-neutral-700 border-r-neutral-700 shadow-md">
+        <div class="w-full lg:w-[420px] flex-none bg-[#c0c0c0] p-1 border-2 border-t-white border-l-white border-b-neutral-700 border-r-neutral-700 shadow-md">
           <!-- Window Title Bar -->
           <div class="flex items-center justify-between p-1 select-none font-mono font-bold text-xs" style="background: linear-gradient(90deg, #000080, #1084d0); color: white;">
             <div class="flex items-center gap-1.5 pl-1">
@@ -71,7 +71,7 @@
 
           <!-- Main Frame Client Area (indented bezel) -->
           <div class="border-2 border-t-neutral-700 border-l-neutral-700 border-b-white border-r-white bg-black mt-1 p-0.5">
-            <iframe style="border-radius: 0px; border: none; background: transparent; display: block;" src="https://open.spotify.com/embed/playlist/1BpJyKjRJ3L5Cvj26BzWsk?utm_source=generator&theme=0" width="100%" height="530" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe style="border-radius: 0px; border: none; background: transparent; display: block;" src="https://open.spotify.com/embed/playlist/1BpJyKjRJ3L5Cvj26BzWsk?utm_source=generator&theme=0" width="100%" height="600" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
         </div>
 
@@ -135,7 +135,7 @@
         img.src = album.img;
         img.alt = album.title;
         
-        const size = Math.floor(Math.random() * 20) + 54;
+        const size = Math.floor(Math.random() * 30) + 70;
         img.className = "absolute border border-black dark:border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.4)] cursor-pointer hover:border-[#39ff14] hover:shadow-[0_0_10px_#39ff14] hover:scale-110 transition-all duration-200 z-10 origin-center object-cover";
         img.style.width = `${size}px`;
         img.style.height = `${size}px`;
