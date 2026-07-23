@@ -195,7 +195,41 @@
                   </div>
                 </button>
                 <div class="faq-content hidden px-4 pb-4 font-sans text-sm text-neutral-600 dark:text-neutral-350 leading-relaxed border-t border-dashed border-gray-200 dark:border-neutral-800 pt-3">
-                  around 90-100 WPM depending on the keyboard layout and difficulty of text.
+                  <p class="mb-3">
+                    around 120 wpm. but can you beat me?
+                  </p>
+                  
+                  <div class="flex flex-col border border-neutral-300 dark:border-neutral-700 p-3 bg-neutral-50 dark:bg-neutral-900 shadow-[1px_1px_2px_0px_rgba(0,0,0,0.05)]">
+                    <!-- Target text -->
+                    <div id="typing-target" class="bg-neutral-800 text-neutral-400 font-mono p-3 rounded-none text-sm leading-relaxed mb-3 select-none tracking-wide">
+                      <!-- Characters will be loaded here dynamically -->
+                    </div>
+                    
+                    <!-- Input box -->
+                    <input
+                      type="text"
+                      id="typing-input"
+                      class="w-full bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-700 font-mono px-3 py-2 text-sm text-neutral-800 dark:text-neutral-100 mb-3 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 rounded-none"
+                      placeholder="click here and start typing..."
+                      autocomplete="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                    />
+                    
+                    <!-- Stats / Refresh -->
+                    <div class="flex items-center justify-between font-mono text-xs select-none">
+                      <div class="flex gap-4">
+                        <span id="typing-wpm" class="text-amber-600 dark:text-amber-400 font-bold">0 wpm</span>
+                        <span id="typing-timer" class="text-neutral-500 dark:text-neutral-400">0.0s</span>
+                      </div>
+                      <button
+                        onclick="resetTypingTest()"
+                        class="px-4 py-1.5 border border-black dark:border-white font-bold bg-white dark:bg-neutral-900 text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.8)] text-[11px]"
+                      >
+                        refresh
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -246,6 +280,13 @@
         content.classList.add('block');
         icon.textContent = 'x';
         icon.classList.add('text-red-500', 'dark:text-red-400');
+        
+        // Auto-focus typing input if it's the typing test box
+        const typingInput = content.querySelector('#typing-input');
+        if (typingInput) {
+          initTypingTest();
+          setTimeout(() => typingInput.focus(), 50);
+        }
       } else {
         content.classList.remove('block');
         content.classList.add('hidden');
@@ -253,5 +294,117 @@
         icon.classList.remove('text-red-500', 'dark:text-red-400');
       }
     }
+
+    // Typing Test Mini-game
+    const phrases = [
+      "my roblox game just hit a million plays lets go dude",
+      "don't believe everything you read on the internet",
+      "the carburetors just need a quick clean it is never a quick clean",
+      "this next idea will only take a weekend and then it doesn't",
+      "optimize the strategy parser and build tools out of thin air",
+      "wrestling and BJJ purple belt with a passion for motorcycles",
+      "autonomous go kart racing algorithms to beat human lap times"
+    ];
+
+    let currentPhrase = "";
+    let timerInterval = null;
+    let startTime = null;
+    let testStarted = false;
+    let testCompleted = false;
+
+    function initTypingTest() {
+      const targetEl = document.getElementById('typing-target');
+      const inputEl = document.getElementById('typing-input');
+      const wpmEl = document.getElementById('typing-wpm');
+      const timerEl = document.getElementById('typing-timer');
+
+      if (!targetEl || !inputEl) return;
+
+      currentPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+      
+      targetEl.innerHTML = currentPhrase.split('').map(char => `<span class="text-neutral-500 dark:text-neutral-500">${char}</span>`).join('');
+      
+      inputEl.value = '';
+      inputEl.disabled = false;
+      wpmEl.textContent = '0 wpm';
+      wpmEl.className = 'text-amber-600 dark:text-amber-400 font-bold';
+      timerEl.textContent = '0.0s';
+      
+      clearInterval(timerInterval);
+      timerInterval = null;
+      startTime = null;
+      testStarted = false;
+      testCompleted = false;
+    }
+
+    function resetTypingTest() {
+      initTypingTest();
+      const inputEl = document.getElementById('typing-input');
+      if (inputEl) {
+        inputEl.focus();
+      }
+    }
+
+    function handleTypingInput(e) {
+      if (testCompleted) return;
+
+      const inputVal = e.target.value;
+      const targetSpans = document.getElementById('typing-target').querySelectorAll('span');
+      
+      if (!testStarted && inputVal.length > 0) {
+        testStarted = true;
+        startTime = new Date();
+        timerInterval = setInterval(updateTypingTimer, 100);
+      }
+
+      let correctCharsCount = 0;
+
+      for (let i = 0; i < targetSpans.length; i++) {
+        const span = targetSpans[i];
+        const typedChar = inputVal[i];
+
+        if (typedChar === undefined) {
+          span.className = 'text-neutral-500 dark:text-neutral-500';
+        } else if (typedChar === span.textContent) {
+          span.className = 'text-white dark:text-neutral-100 font-semibold';
+          correctCharsCount++;
+        } else {
+          span.className = 'text-red-400 bg-red-900/30';
+        }
+      }
+
+      if (testStarted) {
+        const timeElapsed = (new Date() - startTime) / 1000;
+        const wpm = Math.round((correctCharsCount / 5) / (Math.max(timeElapsed, 0.5) / 60));
+        document.getElementById('typing-wpm').textContent = `${wpm} wpm`;
+      }
+
+      if (inputVal === currentPhrase) {
+        testCompleted = true;
+        clearInterval(timerInterval);
+        e.target.disabled = true;
+        
+        const totalTime = (new Date() - startTime) / 1000;
+        const finalWpm = Math.round((currentPhrase.length / 5) / (totalTime / 60));
+        const wpmEl = document.getElementById('typing-wpm');
+        wpmEl.textContent = `${finalWpm} wpm (completed!)`;
+        wpmEl.className = "text-green-600 dark:text-green-400 font-bold animate-pulse";
+      }
+    }
+
+    function updateTypingTimer() {
+      if (!startTime) return;
+      const timeElapsed = (new Date() - startTime) / 1000;
+      document.getElementById('typing-timer').textContent = `${timeElapsed.toFixed(1)}s`;
+    }
+
+    // Initialize event listeners when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      initTypingTest();
+      const inputEl = document.getElementById('typing-input');
+      if (inputEl) {
+        inputEl.addEventListener('input', handleTypingInput);
+      }
+    });
   </script>
 {% endblock %}
