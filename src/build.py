@@ -212,7 +212,6 @@ pages_to_render = [
     ("music.html", "music.html", f"{name} | Music"),
     ("wins.html", "wins.html", f"{name} | Wins"),
     ("lore.html", "lore.html", f"{name} | Lore"),
-    ("toolbox.html", "toolbox.html", f"{name} | Toolbox"),
 ]
 
 for template_name, output_name, page_title in pages_to_render:
