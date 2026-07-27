@@ -155,12 +155,57 @@ def render_post(folder, post):
     for item in og:
         soup.head.append(bs(item))
 
+    make_paths_relative(soup, 1)
+
+    for img_tag in soup.find_all("img"):
+        img_tag_rule(img_tag)
+
     return soup.encode_contents().decode("utf-8")
 
 
 def render_post_list(folder, posts):
     template = env.get_template(f"posts/{folder}/list.html")
     return template.render(posts=posts)
+
+
+def make_paths_relative(soup, depth):
+    if depth == 0:
+        prefix = ""
+    else:
+        prefix = "../" * depth
+
+    tag_attrs = {
+        "img": "src",
+        "a": "href",
+        "link": "href",
+        "script": "src",
+        "iframe": "src"
+    }
+
+    for tag_name, attr in tag_attrs.items():
+        for tag in soup.find_all(tag_name):
+            if tag.has_attr(attr):
+                val = tag[attr]
+                if val.startswith("/") and not val.startswith("//"):
+                    tag[attr] = prefix + val[1:]
+
+    # Also inspect and rewrite inline 'style' attributes that contain url(/...)
+    import re
+    for tag in soup.find_all(attrs={"style": True}):
+        style = tag["style"]
+        if "url(" in style:
+            def repl(match):
+                path = match.group(1)
+                if path.startswith("/") and not path.startswith("//"):
+                    return f"url('{prefix}{path[1:]}')"
+                return match.group(0)
+            tag["style"] = re.sub(r"url\(['\"]?(/[^'\")]*)['\"]?\)", repl, style)
+
+def img_tag_rule(img_tag: element.Tag):
+    if not img_tag.has_attr("decoding"):
+        img_tag["decoding"] = "async"
+    if not img_tag.has_attr("loading"):
+        img_tag["loading"] = "lazy"
 
 
 post_folders = [f for f in os.listdir("posts") if os.path.isdir(f"posts/{f}")]
@@ -179,11 +224,7 @@ for post_folder in post_folders:
     lists[post_folder] = render_post_list(post_folder, posts)
 
 
-def img_tag_rule(img_tag: element.Tag):
-    if not img_tag.has_attr("decoding"):
-        img_tag["decoding"] = "async"
-    if not img_tag.has_attr("loading"):
-        img_tag["loading"] = "lazy"
+
 
 
 seo_common = {
@@ -252,6 +293,8 @@ for template_name, output_name, page_title in pages_to_render:
         
         for item in page_seotags:
             soup.head.append(bs(item))
+
+        make_paths_relative(soup, 0)
 
         for img_tag in soup.find_all("img"):
             img_tag_rule(img_tag)
