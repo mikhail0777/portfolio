@@ -2,7 +2,7 @@
 title: "Autonomous AI-Assisted Quantitative Trading System"
 summary: "Ingests real-time market data, detects Fair Value Gaps (FVG) and Breaks of Structure (BOS), manages risk rules, and utilizes GPT-4o execution checks"
 coverImage: "/assets/trading-dashboard.png"
-order: -3
+order: 4
 ---
 
 The Autonomous Quantitative Trading System is a custom pipeline designed to trade financial markets by programmatically detecting high-probability structural inefficiencies and applying a multi-agent validation layer before executing any order.

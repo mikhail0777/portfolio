@@ -2,7 +2,7 @@
 title: "Develiq: AI-Driven Technical Prep Platform"
 summary: "Next-gen technical preparation platform featuring an interactive Monaco-editor sandbox and multi-agent AI panels reviewing code changes in real-time"
 coverImage: "/assets/develiq-landing.png"
-order: -4
+order: 5
 ---
 
 Develiq is an advanced, code-observant technical preparation platform designed to move past simple algorithmic memory banks like static LeetCode. It acts as an interactive, multi-agent AI review panel that observes code changes in real-time, runs semantic test-case validations, and grills candidates on production-grade software engineering tactics (HMAC signature security, Redis race conditions, JWKS tokens, and circuit-breaker states).

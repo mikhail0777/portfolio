@@ -2,7 +2,7 @@
 title: "Ray tracer in Rust"
 summary: "or how to trick yourself into learning some statistics"
 coverImage: "/assets/raytrace.png"
-order: -2
+order: 1
 ---
 
 The cover image is rendered for 512 samples per pixel, 1280x720, and took about 2 minutes to render.
