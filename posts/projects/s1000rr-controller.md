@@ -337,3 +337,46 @@ By avoiding expensive $10,000 motorsport ECUs or unsafe CAN sensor spoofing, the
 The complete C++ firmware, hardware wiring schematic, and 100 Hz fail-safe bypass relay architecture are open-source in the companion repository: 
 [**github.com/mikhail0777/S1000RR_ECU_Cotnroller ↗**](https://github.com/mikhail0777/S1000RR_ECU_Cotnroller)
 
+---
+
+## Acknowledgments & References
+
+First off, a huge thank you to everyone who helped me understand what I was actually getting myself into with this project. What started as a naive idea to make my BMW S1000RR hold a wheelie turned into a much deeper rabbit hole of rigid-body physics, control theory, engine management, and discovering just how thoroughly BMW's engineers designed their ECU to prevent someone like me from messing with it.
+
+### Professor Mattia Bruschetta — University of Padova
+
+A massive thank you to **Professor Mattia Bruschetta** for taking the time to personally respond to my cold emails and generously share his knowledge.
+
+His lab's published research on nonlinear model predictive anti-wheelie control was one of the single biggest inspirations behind this project. He walked me through how their team implemented an external controller on an Aprilia RSV4, how they managed engine torque over CAN, and why gaining control authority over a production ECU is such a brutal engineering hurdle. His practical advice on modeling actuator delays, simulating hybrid contact states, and validating stability before touching the actual bike saved me countless headaches.
+
+I'm genuinely grateful that an academic with his experience took the time to help an undergraduate CS student halfway across the world trying to teach his motorcycle a new trick.
+
+### Peter Schouten — alpha Racing
+**Head of Electronics and Race Support**
+
+A huge thank you to **Peter Schouten** at alpha Racing for patiently answering my questions about the BMW K67 electronics architecture.
+
+Peter clarified how BMW's factory wheelie control actually operates under the hood, how its internal PID manages engine torque, what is exposed through the M Race Calibration software, and crucially, confirmed that the production BMS-O ECU does *not* accept external torque-limit commands over the CAN bus. 
+
+Essentially, he helped me realize that BMW had already built something remarkably similar to what I wanted—except they designed theirs to keep the front wheel glued to the tarmac, and I was trying to do the exact opposite. His technical breakdowns saved me thousands of dollars and months of chasing CAN-bus dead ends.
+
+---
+
+### Sources & Technical References
+
+* **Bruschetta et al. (University of Padova):** *Anti-wheelie systems for high-performance motorcycles: A Nonlinear Model Predictive Control approach* (Luca Caiaffa, Fabio Maran, Matteo Furlan, Stivi Peron, Alessandro Beghi, Mattia Bruschetta) — [ScienceDirect Article](https://www.sciencedirect.com/science/article/pii/S0967066124003836)
+* **MATMPC Framework:** An open-source nonlinear MPC framework for real-time embedded control — [github.com/chenyutao36/MATMPC](https://github.com/chenyutao36/MATMPC)
+* **BMW Motorrad Motorsport Documentation:** M Race Calibration Kit reference, factory torque-reduction strategies, and riding mode architectures — [BMW Motorrad Motorsport Support](https://www.bmw-motorrad.com/en/motorsport/race-support.html)
+* **alpha Racing:** Technical specifications and motorsport electronics documentation for the BMW S1000RR — [alpharacing.com](https://www.alpharacing.com)
+* **BMW S1000RR Rider & Service Manuals:** Factory CAN layout, TGS throttle pinouts, and plausibility fault code documentation — [BMW Motorrad Manuals](https://www.bmwmotorcycles.com/en/service/manuals/service-overview.html)
+
+---
+
+### Final Thoughts
+
+To everyone who answered my emails, shared papers, or pointed me in the right direction: thank you.
+
+Writing control algorithms in simulation is one thing, but convincing a modern 205-horsepower BMW superbike to hand over the reins is an entirely different battle. And apparently, BMW didn't include a convenient setting in the dashboard labeled **"Let the computer science student take over."**
+
+*Note: This is an independent personal engineering project and is not affiliated with, sponsored by, or endorsed by BMW Motorrad, alpha Racing, or the University of Padova.*
+
