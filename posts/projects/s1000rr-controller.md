@@ -336,3 +336,4 @@ By avoiding expensive $10,000 motorsport ECUs or unsafe CAN sensor spoofing, the
 
 The complete C++ firmware, hardware wiring schematic, and 100 Hz fail-safe bypass relay architecture are open-source in the companion repository: 
 [**github.com/mikhail0777/S1000RR_ECU_Cotnroller ↗**](https://github.com/mikhail0777/S1000RR_ECU_Cotnroller)
+
