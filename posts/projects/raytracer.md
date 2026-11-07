@@ -5,182 +5,80 @@ coverImage: "/assets/raytrace.png"
 order: 1
 ---
 
-The cover image is rendered for 512 samples per pixel, 1280x720, and took about 2 minutes to render.
-It was tone-mapped in Blender's compositor.
+I wanted to build a renderer because graphics has a useful way of turning abstract math into something I can inspect. If an intersection is wrong, a mesh tears. If a probability distribution is wrong, the image gets noisy or biased. The feedback loop is immediate, but getting a clean image still forces me to understand what the code is estimating.
 
-For comparison, here's the exact same scene rendered with Blender Cycles at 32 samples, 1280x720, 
-which took 11.46 seconds:
+This project became a small CPU path tracer written in Rust. The current scene loader reads a triangulated OBJ with vertex normals, uses an EXR environment map for illumination, and writes the accumulated result back to a linear EXR. The cover render uses 512 samples per pixel at 1280×720; my recorded run took about two minutes, after which I used Blender's compositor for Filmic tone mapping.
 
-![Blender Cycles](/assets/raytrace-cycles.png)
+For comparison, I also rendered the same scene in Blender Cycles at 32 samples and 1280×720:
 
-## Why is my renderer worse?
+![The same Suzanne scene rendered in Blender Cycles](/assets/raytrace-cycles.png)
 
-Well I wrote mine in 2 weekends whereas Blender Cycles has been in development for years. But we can
-see that Cycles takes about 388 nanoseconds per pixel-sample, whereas my renderer only takes about
-271 nanoseconds. This includes the amortized cost of the BVH construction and texture loading.
+Cycles converged to a cleaner image with far fewer samples. That comparison was more useful than declaring either renderer “faster”: my old notes measured roughly 271 ns per pixel-sample for this tracer and 388 ns for that Cycles run, but they are very different rendering kernels with different sampling strategies and feature sets. The important result was that raw throughput did not compensate for samples spent in unhelpful directions.
 
-My render is faster per sample, but why is the image so much noisier at 16 times the number of
-samples?
+## From a pixel to a path
 
-The answer comes down to some interesting statistics. To get there, let's first cover what a
-ray tracer actually does.
+The renderer starts by building a perspective camera. For each sample pass, it walks every pixel in parallel with Rayon, jitters the pixel coordinate, transforms the point through the inverse projection, and creates a camera ray. Each call to `sample_once` produces one sample for the whole image; the main loop accumulates 512 of those matrices before dividing by the sample count.
 
-## The rendering equation
+From there, `Scene::sample` follows a compact recursive pipeline:
 
-This is the rendering equation
+1. Find the nearest triangle hit through the scene BVH.
+2. Interpolate the triangle's vertex normals with barycentric coordinates.
+3. Build a local coordinate frame around that normal.
+4. Sample a new direction from the material distribution.
+5. Offset the new ray origin slightly to avoid immediately hitting the same surface.
+6. Trace the next bounce, up to the configured limit of eight.
+
+If a ray misses the mesh, the renderer converts its direction to equirectangular UV coordinates and bilinearly samples the HDR environment map. That environment is both the visible background and the light source in the current implementation.
+
+## The rendering equation in code
+
+The quantity I am trying to estimate is outgoing radiance:
 
 $$
 L_o(\mathbf{x}, \omega_o) = L_e(\mathbf{x}, \omega_o) + \int_{\Omega} f(\mathbf{x}, \omega_i, \omega_o) L_i(\mathbf{x}, \omega_i) (\omega_i \cdot \mathbf{n}) d\omega_i
 $$
 
-For each pixel, we want to calculate $L_o(\mathbf{x}, \omega_o)$, the radiance leaving the surface
-at $\mathbf{x}$ in the direction $\omega_o$. This is the sum of the emitted light $L_e(\mathbf{x}, \omega_o)$
-and the light reflected from all other directions.
-
-Let's take a look at the second term:
+The integral asks how much light arrives from every direction above a surface, how the material responds to it, and how strongly that direction aligns with the surface normal. For a real scene there is no practical closed-form answer, so the renderer estimates it with Monte Carlo samples:
 
 $$
-\int_{\Omega} f(\mathbf{x}, \omega_i, \omega_o) L_i(\mathbf{x}, \omega_i) (\omega_i \cdot \mathbf{n}) d\omega_i
+\int f(x)dx \approx \frac{1}{N}\sum_{i=1}^{N}\frac{f(x_i)}{p(x_i)}, \qquad x_i \sim p(x)
 $$
 
-This is an integral on the point of a surface over all directions where there could be incoming
-light. Ignoring transmission, this is the integral over the upper hemisphere, relative to the
-surface normal.
+In the code, the recursive call supplies the incoming radiance. The active material is Lambertian with a constant albedo, and its sampler produces a cosine-weighted hemisphere direction in the surface's local frame. Its probability density is the cosine with the normal, so the cosine term in the rendering equation cancels with the PDF. What remains at each diffuse bounce is the recursively sampled light scaled by the albedo.
 
-This consists of 3 terms:
+That cancellation was the point where importance sampling stopped feeling like a formula and started feeling like an engineering tool. Uniform hemisphere sampling is unbiased, but it spends many rays near the horizon where the cosine term contributes almost nothing. Matching the sampling distribution to the diffuse BRDF puts more work where it matters and reduces variance without changing the quantity being estimated.
 
-$f(\mathbf{x}, \omega_i, \omega_o)$ is the bidirectional reflectance distribution function (BRDF).
-Basically, it tells us how much light is reflected in direction $\omega_o$ given that light is
-coming in from direction $\omega_i$.
+The repository also contains the outline of a glossy BSDF, but it is not wired into the active render path. I have kept this article honest about that: the demonstrated scene uses diffuse transport. A proper specular implementation would need consistent `sample`, `value`, and PDF behavior for a delta distribution rather than just a reflection-vector helper.
 
-$L_i(\mathbf{x}, \omega_i)$ is the incoming radiance from direction $\omega_i$
+![A development render showing diffuse and reflective material experiments](/assets/raytrace-mixed.png)
 
-Finally, there's the cosine term $(\omega_i \cdot \mathbf{n})$. This exists because we do
-ray tracing from the camera to the light source, which is opposite to the direction that light
-travels. If we instead, for example, traced rays from the light source to the camera, this term
-would not be necessary.
+## Intersections and the BVH
 
-[This video](https://www.youtube.com/watch?v=gsZiJeaMO48) explains this in more detail.
+Every bounce needs the closest surface along a ray. Testing every triangle would make that cost grow directly with mesh size, so I build a bounding volume hierarchy once before rendering. I use the open-source Rust `bvh` crate for construction and traversal, then test only the candidate triangles returned by that traversal.
 
-## Estimating this integral
+The final ray-triangle test is the Möller–Trumbore algorithm. That function in the project was adapted from the algorithm's Wikipedia pseudocode rather than authored from scratch. Once it returns the nearest distance and triangle index, I compute barycentric coordinates and use them to interpolate the OBJ vertex normals for smooth shading.
 
-The second term, the integral is basically impossible to calculate analytically. This is because
-scenes are usually very complicated, consisting of many triangles, with BRDFs that could be defined
-by textures, and lights coming from many directions, or even from environment maps.
+Using a crate let me get to a working acceleration structure quickly, but it also taught me where abstraction can limit experimentation. Building my own BVH would make it easier to explore split heuristics, memory layout, traversal order, and instrumentation. That is one of the clearest next steps if I return to the renderer.
 
-Instead, we use Monte Carlo integration. This is the principle of monte carlo integration:
+## Why Rust worked well here
 
-$$
-\int f(x) dx \approx \frac{1}{N} \sum_{i=1}^{N} f(x_i)
-$$
+Rust gave me a practical structure for separating geometry, camera math, textures, BSDFs, scene traversal, and output without hiding the data flow. `nalgebra` handles vectors and transforms, Rayon parallelizes independent pixel work, and the `exr` crate keeps the pipeline in linear high-dynamic-range color until post-processing.
 
-To see how this works, let's consider the example of shading a pixel on a diffuse surface. The
-diffuse BSDF is literally just a constant: $f(\mathbf{x}, \omega_i, \omega_o) = \text{albedo}$.
+The project also exposed places where “fast” code can still be fragile. The random-number generator is currently a single mutable global seed, which is not an appropriate design for parallel Rayon workers. A future version should use independent per-thread or per-pixel generators with explicit seeds. I would also add tests around camera transforms, sampling distributions, texture lookup boundaries, and intersection edge cases before treating performance measurements as rigorous.
 
-In my ray tracer, there's a struct `Scene` which implements the function
-`sample(self, ray: &Ray) -> Color`. This returns the radiance from the scene in the direction of
-`ray`. This translates to $L_i(\mathbf{x}, \omega_i)$ in the rendering equation, where $\mathbf{x}$
-is the ray origin and $\omega_i$ is the ray direction.
+## What I would improve next
 
-To compute this function, we cast a ray into the scene. This performs a ray-triangle intersection
-test against all the triangles in the scene (see the BVH section below). If the ray hits a triangle,
-the radiance is equal to $L_o(\mathbf{x}, \omega_o)$, where $\mathbf{x}$ is the point of
-intersection, and $\omega_o$ is the direction of the ray pointing towards the camera. 
+The largest image-quality improvement would be sampling the lights as well as the material. Right now the renderer only samples the diffuse BSDF, so a small bright region in the environment can still be difficult to find. Direct environment-light sampling combined with multiple importance sampling would balance both distributions and should reduce noise much more effectively than simply increasing the sample count.
 
-$\omega_o = -\omega_i = -\text{ray.direction}$.
+I would also like to:
 
-To compute $L_o$, we need to estimate the integral. To do that, we pick a random direction on the
-hemisphere. With this, we get a new $\mathbf{x}$ and $\omega_i$, with which we call $L_i$ or `sample`
-again. We multiply this by the BRDF and the cosine term. This is a single sample (of which we did
-512 in the cover image).
+- finish and validate specular and rough-material models;
+- replace the shared random seed with deterministic parallel sampling;
+- add Russian roulette termination instead of relying only on a fixed eight-bounce limit;
+- implement and benchmark a custom BVH;
+- move tone mapping and color transforms into a deliberate, tested color pipeline; and
+- add a scene format instead of hard-coding one OBJ, one camera, and one environment map.
 
-## The problem with this approach
+The main lesson was not that I could outrun a production renderer. It was that renderer performance is inseparable from variance. Rust and parallelism made each sample reasonably cheap, but the probability distribution decided how useful that sample was. That is the part of the project I still find most interesting.
 
-With the method I described, the outputs we get are very noisy (and actually slightly more so than
-the cover image).
-
-We sample all directions with equal probability, even though all directions are not equally likely
-to contribute light. Due to this, the variance of this estimation is equal to the variance of the
-incoming light with respect to vectors on the hemisphere. If, say, all of the light is coming from
-the sun, which only takes up a very small portion of the hemisphere, the variance will be very high.
-
-Additionally, there's the cosine term, which is 0 for directions that are perpendicular to the
-normal, and 1 for directions parallel.
-
-Basically, we're wasting a lot of samples on directions that don't contribute much light.
-
-## Importance Sampling
-
-Importance sampling is the idea of picking samples according to the distribution of light in the
-scene, in addition to the BRDF. Here's the equation
-
-$$
-
-\int f(x) dx = \int \frac{f(x)}{p(x)} p(x) dx \approx \frac{1}{N} \sum_{i=1}^{N} \frac{f(x_i)}{p(x_i)}, x_i \sim p(x)
-
-$$
-
-[This video](https://www.youtube.com/watch?v=C3p2wI4RAi8) is really nice for learning the statistics
-behind importance sampling, and provides a very intuitive understanding of why it reduces variance
-(noise) of the estimate.
-
-I want to preface that all of these methods are simply about sample efficiency. If you took an
-infinite number of samples, you'd get the exact same result with any method.
-
-This is the only thing I implemented in my ray tracer. This picks directions
-according to the BRDF. For a diffuse surface, this is picking a cosine-weighted direction, i.e.,
-zero probability of picking a direction perpendicular to the normal, and higher probability of
-picking directions parallel to the normal.
-
-For mirror surfaces, this is picking a direction that's equal to the reflection of the incoming ray
-with respect to the normal: $\omega_i = \text{reflect}(\omega_o, \mathbf{n})$.
-
-Rewriting the rendering equation with this in mind:
-
-$$
-\int_{\Omega} f(\mathbf{x}, \omega_i, \omega_o) L_i(\mathbf{x}, \omega_i) (\omega_i \cdot \mathbf{n}) d\omega_i = \frac{1}{N} \sum_{i=1}^{N} f(\mathbf{x}, \omega_i, \omega_o) L_i(\mathbf{x}, \omega_i), \omega_i \sim f(\mathbf{x}, \_, \omega_o)
-$$
-
-The underscore signifies that we're picking values of $\omega_i$ by using the BRDF as a probability
-distribution.
-
-We also change the definition of `f` or the BRDF to include the cosine term here. I don't know if
-this is standard practice, but from what I can tell, it's not unsound.
-
-There's still a problem, which is that we're not taking into account the distribution of light in
-the scene.
-
-And to prove I'm doing this correctly, here's a scene with both a diffuse and a mirror surface:
-
-![Diffuse and mirror](/assets/raytrace-mixed.png)
-
-## Multiple Importance sampling
-
-This is what Blender does, allowing it to render images with far less noise at lower sample counts.
-The idea is to pick a distribution $p$ which takes into account not only the BRDF ($f$), but also
-the distribution of light in the scene. I don't know the math behind MIS or how it's
-implemented.
-
-## Colors
-
-This is something I attempted to mess with myself, but realized that Rust community didn't have any 
-OpenColorIO bindings and gave up. Instead, I just exported my renders as EXRs, and since the
-only texture I used was an environment map with linear Rec. 709 colors, linear assumptions
-in the renderer were sound, and I just used Blender's compositor to Filmic tone map the image and
-transform it to sRGB.
-
-## Ray triangle intersections
-
-So at every computation of $L_i$, we need to check if the ray intersects with any objects in the
-scene. If it doesn't, we simply return the environment map color.
-
-To check whether or not it does, we would normally need to check intersection against every triangle
-in the scene. As you could guess, this becomes incredibly slow as the number of triangles increases.
-
-To solve this, we use a BVH (Bounding Volume Hierarchy). This is a tree structure where each node
-contains a bounding box that contains all of the triangles in its children. This allows us to
-quickly discard large portions of the scene that the ray doesn't intersect with.
-
-[This video by Sebastian Lague](https://www.youtube.com/watch?v=C1H4zIiCOaI) is a great explanation
-and implementation of a BVH. I just used a crate that someone else made, which I regret in
-retrospect because it made it harder to do some performance optimizations.
+Source: [mikhail0777/Raytracer](https://github.com/mikhail0777/Raytracer)

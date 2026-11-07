@@ -17,35 +17,33 @@
         <!-- Grid container for shelves -->
         <div class="flex flex-col gap-10">
           
-          <!-- Shelf 1: Hackathons 1 -->
-          <div class="flex flex-col">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-2 pb-1 items-end justify-items-center">
-              
-              <!-- Item 1: QuestCraft -->
-              <div class="flex flex-col items-center gap-2">
-                <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #4CAF50;">
-                  <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
-                  <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
-                  <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
-                  <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
-                </svg>
-                <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
-                  <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">Best Use of Gen AI @ McGill CodeJam 2025</div>
-                  <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">QuestCraft</div>
-                  <div class="relative flex-1 mt-2">
-                    <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
-                      Real-world RPG city quests with AI NPCs.
-                    </div>
-                    <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
-                      Turns real-world city exploration into AI-generated RPG quests with dynamic NPC interactions and multiplayer collaboration.
-                    </div>
-                  </div>
-                </div>
+          <!-- Hackathons & Events -->
+          <div class="flex flex-col gap-3">
+            <div>
+              <h3 class="text-lg font-bold text-neutral-800 dark:text-neutral-200 m-0">Hackathons &amp; Events</h3>
+              <p class="text-[11px] text-neutral-500 mt-1 mb-0">Participation and experiments, kept separate from awards.</p>
+            </div>
+            <div class="w-full border border-gray-300 bg-white dark:bg-neutral-900 p-4 flex flex-col gap-2">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <div class="font-bold text-sm text-neutral-800 dark:text-neutral-100">AI Tinkerers — Agents, Everywhere Global Hackathon</div>
+                <div class="text-[10px] font-mono text-neutral-500">Hackathon participation</div>
               </div>
+              <p class="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed m-0">
+                A hands-on event focused on building with AI agents, collaborating with other developers, and experimenting with new approaches in a fast-moving hackathon environment.
+              </p>
+              <a
+                href="https://www.linkedin.com/company/ai-tinkerers/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs font-mono underline text-neutral-700 dark:text-neutral-200 w-fit"
+              >AI Tinkerers ↗</a>
+            </div>
+          </div>
 
-              <!-- Item 2: SoundScape -->
+          <!-- Shelf 1: Hackathon awards -->
+          <div class="flex flex-col">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 px-2 pb-1 items-end justify-items-center">
+              <!-- SoundScape -->
               <div class="flex flex-col items-center gap-2">
                 <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #2196F3;">
                   <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
@@ -69,31 +67,7 @@
                 </div>
               </div>
 
-              <!-- Item 3: EcoSwap -->
-              <div class="flex flex-col items-center gap-2">
-                <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #F44336;">
-                  <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M46 20 C54 20 54 32 46 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M20 12 h24 v16 c0 6-4 10-12 10 s-12-4-12-10 z" fill="var(--trophy-color)"/>
-                  <path d="M29 38 h6 v10 h-6 z" fill="var(--trophy-color)"/>
-                  <path d="M22 48 h20 v6 h-20 z" fill="#3E2723"/>
-                  <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
-                </svg>
-                <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
-                  <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 w-full leading-tight">Rookie Excellence @ ConUHacks IX 2024</div>
-                  <div class="text-[9px] text-neutral-500 font-mono mt-1 leading-tight truncate w-full">EcoSwap</div>
-                  <div class="relative flex-1 mt-2">
-                    <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
-                      Sustainable item-exchange for students.
-                    </div>
-                    <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
-                      Gamified sustainable item-exchange marketplace for university students with trust scoring and rewards.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 4: ParkPilot -->
+              <!-- ParkPilot -->
               <div class="flex flex-col items-center gap-2">
                 <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #00BCD4;">
                   <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
@@ -121,7 +95,7 @@
             <div class="shelf-wood w-full mt-2"></div>
           </div>
 
-          <!-- Shelf 2: Hackathons 2 & Porsche -->
+          <!-- Shelf 2: Awards & experience -->
           <div class="flex flex-col">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-2 pb-1 items-end justify-items-center">
               
@@ -197,7 +171,7 @@
                 </div>
               </div>
 
-              <!-- Item 8: Porsche Internship -->
+              <!-- Mark Motors Group internship -->
               <div class="flex flex-col items-center gap-2">
                 <svg viewBox="0 0 64 64" class="w-16 h-16 trophy-icon-color" style="--trophy-color: #FFD54F;">
                   <path d="M18 20 C10 20 10 32 18 32 v-12 z" fill="none" stroke="var(--trophy-color)" stroke-width="4" stroke-linecap="round"/>
@@ -208,14 +182,14 @@
                   <path d="M18 54 h28 v4 h-28 z" fill="#212121"/>
                 </svg>
                 <div class="trophy-card w-44 sm:w-48 h-32 p-2.5 flex flex-col text-center hover-swap-container border border-gray-300 bg-white">
-                  <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 truncate w-full">Porsche Internship</div>
-                  <div class="text-[9px] text-neutral-500 font-mono mt-0.5 leading-tight truncate w-full">Porsche - Software & Cloud Infrastructure Engineer Intern</div>
+                  <div class="font-bold text-xs text-neutral-800 dark:text-neutral-100 truncate w-full">Mark Motors Group Internship</div>
+                  <div class="text-[9px] text-neutral-500 font-mono mt-0.5 leading-tight truncate w-full">Mark Motors Group — Cloud Operations Intern</div>
                   <div class="relative flex-1 mt-2">
                     <div class="hover-swap-short text-[10px] text-neutral-500 leading-normal absolute inset-0">
-                      Software & Cloud Infrastructure Engineering.
+                      Cloud infrastructure and IT operations.
                     </div>
                     <div class="hover-swap-long text-[9.5px] text-neutral-600 dark:text-neutral-300 leading-snug absolute inset-0 overflow-y-auto pr-0.5">
-                      Software & Cloud Infrastructure Engineer intern at Porsche, Ottawa. Working on cloud operations and automation pipelines.
+                      Cloud Operations Intern at Mark Motors Group, supporting Microsoft Azure, identity administration, automation, infrastructure, and IT operations.
                     </div>
                   </div>
                 </div>
